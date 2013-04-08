@@ -7,6 +7,7 @@ define library deft-server
   use io;
 
   use deft-core;
+  use http-server;
 end library;
 
 define module deft-server
@@ -14,4 +15,5 @@ define module deft-server
   use format-out;
 
   use deft-core;
+  use http-server;
 end module;

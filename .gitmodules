@@ -1,0 +1,3 @@
+[submodule "ext/http"]
+	path = ext/http
+	url = git://github.com/dylan-lang/http.git

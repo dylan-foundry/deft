@@ -8,11 +8,13 @@ LIB_SOURCES = $(wildcard */*.dylan) \
 TEST_SOURES = $(wildcard tests/*.dylan) \
               $(wildcard tests/*.lid)
 
+REGISTRIES = `pwd`/registry:`pwd`/ext/http/registry
+
 build: $(LIB_SOURCES)
-	dylan-compiler -build deft
+	OPEN_DYLAN_USER_REGISTRIES=$(REGISTRIES) dylan-compiler -build deft
 
 test: $(LIB_SOURCES) $(TEST_SOURCES)
-	dylan-compiler -build deft-test-suite-app
+	OPEN_DYLAN_USER_REGISTRIES=$(REGISTRIES) dylan-compiler -build deft-test-suite-app
 	_build/bin/deft-test-suite-app
 
 clean:
