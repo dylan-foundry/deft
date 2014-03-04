@@ -1,3 +1,3 @@
 library: deft-core
 files: library
-       commands
+       deft-core

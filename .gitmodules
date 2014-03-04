@@ -1,3 +1,6 @@
 [submodule "ext/http"]
 	path = ext/http
 	url = git://github.com/dylan-lang/http.git
+[submodule "ext/cli"]
+	path = ext/cli
+	url = https://github.com/promovicz/dylan-cli.git

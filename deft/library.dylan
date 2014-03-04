@@ -4,7 +4,7 @@ copyright: See LICENSE file in this distribution.
 
 define library deft
   use common-dylan;
-  use command-line-parser;
+  use cli;
   use io;
 
   use deft-core;
@@ -13,7 +13,8 @@ end library;
 
 define module deft
   use common-dylan, exclude: { format-to-string };
-  use command-line-parser;
+  use cli;
+  use tty;
   use format-out;
 
   use deft-core;
