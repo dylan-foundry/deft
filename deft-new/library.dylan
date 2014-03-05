@@ -2,27 +2,20 @@ module: dylan-user
 author: Bruce Mitchener, Jr.
 copyright: See LICENSE file in this distribution.
 
-define library deft
+define library deft-new
   use common-dylan;
   use cli;
   use io;
 
   use deft-core;
 
-  use deft-build;
-  use deft-new;
-  use deft-server;
+  export deft-new;
 end library;
 
-define module deft
+define module deft-new
   use common-dylan, exclude: { format-to-string };
   use cli;
-  use tty;
   use format-out;
 
   use deft-core;
-
-  use deft-build;
-  use deft-new;
-  use deft-server;
 end module;
