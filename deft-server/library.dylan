@@ -7,6 +7,8 @@ define library deft-server
   use io;
 
   use deft-core;
+
+  export deft-server;
 end library;
 
 define module deft-server
