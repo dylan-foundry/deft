@@ -4,3 +4,6 @@
 [submodule "ext/cli"]
 	path = ext/cli
 	url = https://github.com/promovicz/dylan-cli.git
+[submodule "ext/json"]
+	path = ext/json
+	url = https://github.com/dylan-lang/json.git
