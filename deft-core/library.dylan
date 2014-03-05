@@ -22,5 +22,8 @@ define module deft-core
 
   export $deft-cli;
 
+  export $deft-release-name,
+         $deft-release-version;
+
   export deft-config;
 end module;
