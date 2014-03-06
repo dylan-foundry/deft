@@ -8,6 +8,7 @@ define library deft-core
   use io;
   use json;
   use system;
+  use release-info;
 
   export deft-core;
 end library;
@@ -19,6 +20,7 @@ define module deft-core
   use format-out;
   use json;
   use locators;
+  use release-info;
 
   export $deft-cli;
 

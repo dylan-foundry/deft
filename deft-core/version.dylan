@@ -10,3 +10,8 @@ define cli-command $deft-cli (show deft version)
   implementation
     format-out("%s %s\n", $deft-release-name, $deft-release-version);
 end;
+
+define cli-command $deft-cli (show dylan version)
+  implementation
+    format-out("%s\n", release-full-name());
+end;
