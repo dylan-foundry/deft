@@ -1,4 +1,6 @@
 library: deft-build
 files: library
-       deft-build
+       projects
+       compilation
        registries
+       reports
