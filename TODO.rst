@@ -9,6 +9,9 @@ Config
 * Should be able to set configuration parameters and save the updated
   ``deft-package.json`` back to disk.
 
+  * This requires the JSON extensions for preserving file order
+    and pretty printing.
+
 JSON Extensions
 ---------------
 
@@ -26,6 +29,7 @@ CLI Extensions
 --------------
 
 * Mandatory parameters are not implemented yet.
+* Should CLI integrate with libuv?
 
 Registry Management
 -------------------
@@ -37,4 +41,35 @@ Registry Management
   never use system registries, do we?
 * Can we make the registry that we add based on current working
   directory be relative rather than absolute?
-* Finish ``populate-registry`` function.
+* Finish ``populate-registries`` function.
+
+Schema Validation
+-----------------
+
+* Should finish up the Dylan Foundry ``schema-core`` code and
+  use it to validate the ``deft-package.json`` instead of
+  hand-rolled code within functions like ``populate-registries``.
+
+Build
+-----
+
+* How should we pull in the system-provided Jam files and
+  runtime libraries rather than having our own copy?
+* Default to less output.
+
+New
+---
+
+* Borrow the code from ``make-dylan-app``.
+* Parameterize more:
+
+  * new project
+  * new application
+  * new library
+  * new tests
+
+* Make it support adding to an existing project when it is inside
+  an existing project.
+* Make it set up basic deft integration for new project or tests.
+
+  * This will require the ability to modify and save out configuration.
