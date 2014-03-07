@@ -39,8 +39,8 @@ define function merge-config
 end function;
 
 define function load-deft-config () => (config :: <string-table>)
-  let project-config = parse-config-file(".deft");
-  let local-config = parse-config-file(".deft_local");
+  let project-config = parse-config-file("deft-package.json");
+  let local-config = parse-config-file("deft-package-local.json");
   let merged-config = merge-config(project-config, local-config);
   if (empty?(merged-config))
     format-err("WARNING: No config files found for project.\n");
