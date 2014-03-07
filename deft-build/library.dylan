@@ -12,6 +12,7 @@ define library deft-build
 
   use deft-core;
 
+  use build-system;
   use projects;
   use user-projects;
   use registry-projects;
@@ -30,8 +31,7 @@ define module deft-build
   use streams;
   use format,
     import: { format };
-  use format-out,
-    import: { format-out };
+  use format-out;
   use standard-io;
   use file-system;
   use locators;
@@ -41,7 +41,9 @@ define module deft-build
 
   use deft-core;
 
+  use build-system, import: { target-platform-name };
   use projects, import: { default-build-script };
+  use registry-projects, import: { find-registries, registry-location };
   use environment-protocols,
     exclude: { application-filename, application-arguments, parameter-name };
   use environment-reports;
