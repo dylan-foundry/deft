@@ -3,6 +3,22 @@ synopsis:
 author: Bruce Mitchener, Jr.
 copyright: See LICENSE file in this distribution.
 
+define function populate-registries () => ()
+  let config = deft-config();
+  let registries = element(config, "registries", default: #f);
+  if (registries & instance?(registries, <sequence>))
+    for (registry-entry in registries)
+      if (instance?(registry-entry, <string>))
+        // Do something ...
+      else
+        format-err("ERROR: registry entries should be strings. Found %=\n", registry-entry);
+      end if;
+    end for;
+  else
+    format-err("ERROR: 'registries' should be a sequence of strings.\n");
+  end if;
+end;
+
 define cli-command $deft-cli (show build registries)
   implementation
     begin
@@ -13,3 +29,5 @@ define cli-command $deft-cli (show build registries)
       end for;
     end;
 end;
+
+populate-registries();
