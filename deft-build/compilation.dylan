@@ -5,7 +5,7 @@ copyright: See LICENSE file in this distribution.
 
 define cli-command $deft-cli (build)
   simple parameter project :: <string>,
-    node-class: <cli-dylan-project>;
+    node-class: <cli-open-dylan-project>;
   implementation
     begin
       let p = dylan-project($cli, project);
@@ -31,7 +31,7 @@ end;
 
 define cli-command $deft-cli (clean)
   simple parameter project :: <string>,
-    node-class: <cli-dylan-project>;
+    node-class: <cli-open-dylan-project>;
   implementation
     begin
       let p = dylan-project($cli, project);

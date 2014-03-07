@@ -97,7 +97,7 @@ define constant $cli = make(<dylan-cli>);
 
 define cli-command $deft-cli (show project)
   simple parameter project :: <string>,
-    node-class: <cli-dylan-project>;
+    node-class: <cli-open-dylan-project>;
   implementation
     begin
       let p = dylan-project($cli, project);
@@ -143,7 +143,7 @@ end;
 
 define cli-command $deft-cli (close)
   simple parameter project :: <string>,
-    node-class: <cli-dylan-project>;
+    node-class: <cli-open-dylan-project>;
   implementation
     begin
       format-out("Closing %s!\n", project);
