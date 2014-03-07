@@ -86,13 +86,6 @@ end method;
 define function find-project-for-library
     (library-name :: <symbol>) => (project :: false-or(<project-object>))
   find-project(as(<string>, library-name))
-    | begin
-        let library-info = find-library-info(library-name);
-        if (library-info)
-          let location = info-location(library-info);
-          location & open-project-from-locator(as(<file-locator>, location))
-        end
-      end
 end function find-project-for-library;
 
 define function open-project-from-locator (locator :: <file-locator>)
