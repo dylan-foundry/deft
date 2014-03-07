@@ -1,0 +1,11 @@
+{
+  "name": "deft",
+  "description": "A build tool for Dylan.",
+  "keywords": [
+    "build"
+  ],
+  "registries": [
+    "ext/cli/registry",
+    "ext/json/registry"
+  ]
+}

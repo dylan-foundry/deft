@@ -21,6 +21,7 @@ define module deft-core
   use json;
   use locators;
   use release-info;
+  use streams;
 
   export $deft-cli;
 

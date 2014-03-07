@@ -51,3 +51,12 @@ end function;
 define function deft-config () => (config :: <string-table>)
   *config*
 end function;
+
+define cli-command $deft-cli (show deft config)
+  implementation
+    begin
+      let stream = make(<string-stream>, direction: #"output");
+      encode-json(stream, deft-config());
+      format-out("%s\n", stream-contents(stream));
+    end;
+end;
