@@ -19,7 +19,7 @@ define method node-complete (param :: <cli-report-type>, parser :: <cli-parser>,
   as(<list>, compls);
 end method;
 
-define cli-command $deft-cli (report)
+define cli-command report ($deft-cli)
   simple parameter report :: <symbol>,
     node-class: <cli-report-type>;
   named parameter project :: <string>,

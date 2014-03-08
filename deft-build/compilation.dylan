@@ -3,7 +3,7 @@ synopsis:
 author: Bruce Mitchener, Jr.
 copyright: See LICENSE file in this distribution.
 
-define cli-command $deft-cli (build)
+define cli-command build ($deft-cli)
   simple parameter project :: <string>,
     node-class: <cli-open-dylan-project>;
   implementation
@@ -29,7 +29,7 @@ define cli-command $deft-cli (build)
     end;
 end;
 
-define cli-command $deft-cli (clean)
+define cli-command clean ($deft-cli)
   simple parameter project :: <string>,
     node-class: <cli-open-dylan-project>;
   implementation
