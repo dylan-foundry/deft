@@ -6,6 +6,8 @@ define library deft-test
   use common-dylan;
   use io;
 
+  use cli;
+
   use deft-core;
 
   export deft-test;
@@ -14,6 +16,8 @@ end library;
 define module deft-test
   use common-dylan, exclude: { format-to-string };
   use format-out;
+
+  use cli;
 
   use deft-core;
 end module;
