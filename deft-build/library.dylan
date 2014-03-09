@@ -47,4 +47,9 @@ define module deft-build
   use environment-protocols,
     exclude: { application-filename, application-arguments, parameter-name };
   use environment-reports;
+
+  export deft-open-project,
+         deft-clean-project,
+         deft-build-project,
+         deft-clean-project;
 end module;

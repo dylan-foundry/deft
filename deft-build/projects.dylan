@@ -66,7 +66,6 @@ define method node-complete (param :: <cli-dylan-project>, parser :: <cli-parser
   as(<list>, compls);
 end method;
 
-
 define function find-project-for-library
     (library-name :: <symbol>) => (project :: false-or(<project-object>))
   find-project(as(<string>, library-name))
@@ -95,6 +94,30 @@ end function;
 
 define constant $cli = make(<dylan-cli>);
 
+define function deft-open-project (project :: <string>) => (project)
+  let (pobj, invalid?) = open-project-from-locator(as(<file-locator>, project));
+  case
+    pobj =>
+      open-project-compiler-database
+        (pobj, warning-callback: curry(note-compiler-warning, $cli, pobj));
+
+      pobj.project-opened-by-user? := #t;
+
+      dylan-current-project($cli) := pobj;
+
+      pobj;
+    invalid? =>
+      error("Cannot open '%s' as it is not a project", project);
+    otherwise =>
+      error("Unable to open project '%s'", project);
+  end
+end;
+
+define function deft-close-project (project :: <string>)
+  let p = dylan-project($cli, project);
+  close-project(p);
+end;
+
 define cli-command show project ($deft-cli)
   simple parameter project :: <string>,
     node-class: <cli-open-dylan-project>;
@@ -118,26 +141,11 @@ define cli-command open ($deft-cli)
   implementation
     begin
       format-out("Opening %s!\n", project);
-      let (pobj, invalid?) = open-project-from-locator(as(<file-locator>, project));
-      case
-        pobj =>
-          open-project-compiler-database
-            (pobj, warning-callback: curry(note-compiler-warning, $cli, pobj));
+      let p = deft-open-project(project);
+      format-out("Opened project %s (%s)",
+                 p.project-name,
+                 p.project-filename);
 
-          format-out("Opened project %s (%s)",
-                     pobj.project-name,
-                     pobj.project-filename);
-
-          pobj.project-opened-by-user? := #t;
-
-          dylan-current-project($cli) := pobj;
-
-          pobj;
-        invalid? =>
-          error("Cannot open '%s' as it is not a project", project);
-        otherwise =>
-          error("Unable to open project '%s'", project);
-      end
     end;
 end;
 
@@ -147,7 +155,6 @@ define cli-command close ($deft-cli)
   implementation
     begin
       format-out("Closing %s!\n", project);
-      let p = dylan-project($cli, project);
-      close-project(p);
+      deft-close-project(project);
     end;
 end;
