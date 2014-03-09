@@ -30,6 +30,9 @@ CLI Extensions
 
 * Mandatory parameters are not implemented yet.
 * Should CLI integrate with libuv?
+* Need to set an exit status from something like ``test`` when run from
+  the shell and not interactively.
+* Need to handle conditions correctly and not abort the process.
 
 Registry Management
 -------------------
@@ -42,6 +45,12 @@ Registry Management
 * Can we make the registry that we add based on current working
   directory be relative rather than absolute?
 * Finish ``populate-registries`` function.
+
+Projects
+--------
+
+* How do we get at project data, like ``Target-Type`` and
+  ``Executable``? (We'd like to use this when running tests.)
 
 Schema Validation
 -----------------
