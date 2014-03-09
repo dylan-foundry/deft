@@ -7,6 +7,7 @@ define class <dylan-cli> (<object>)
   slot dylan-current-project :: false-or(<project-object>) = #f;
 end class;
 
+define constant $cli = make(<dylan-cli>);
 
 define method dylan-project-named (cli :: <dylan-cli>, string :: <string>)
  => (project :: false-or(<project-object>));
@@ -91,8 +92,6 @@ define function open-project-from-locator (locator :: <file-locator>)
       end;
   end;
 end function;
-
-define constant $cli = make(<dylan-cli>);
 
 define function deft-open-project (project :: <string>) => (project)
   let (pobj, invalid?) = open-project-from-locator(as(<file-locator>, project));
