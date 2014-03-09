@@ -3,33 +3,41 @@ synopsis:
 author: Bruce Mitchener, Jr.
 copyright: See LICENSE file in this distribution.
 
-define function deft-build-project (project :: <string>)
+define method deft-build-project (project :: <string>) => ()
   let p = dylan-project($cli, project);
   if (p)
-    format-out("Building project %s\n", project-name(p));
-    if (build-project(p,
-                      process-subprojects?: #t,
-                      link?: #f,
-                      save-databases?: #t,
-                      progress-callback:    curry(note-build-progress, $cli, p),
-                      warning-callback:     curry(note-compiler-warning, $cli, p),
-                      error-handler:        curry(compiler-condition-handler, $cli)))
-      link-project
-        (p,
-         build-script: default-build-script(),
-         process-subprojects?: #t,
-         progress-callback:    curry(note-build-progress, $cli, p),
-         error-handler:        curry(compiler-condition-handler, $cli));
-    end;
-  end;
+    deft-build-project(p);
+  end if;
 end;
 
-define function deft-clean-project (project :: <string>)
+define method deft-build-project (project :: <project-object>) => ()
+  format-out("Building project %s\n", project-name(project));
+  if (build-project(project,
+                    process-subprojects?: #t,
+                    link?: #f,
+                    save-databases?: #t,
+                    progress-callback:    curry(note-build-progress, $cli, project),
+                    warning-callback:     curry(note-compiler-warning, $cli, project),
+                    error-handler:        curry(compiler-condition-handler, $cli)))
+    link-project
+      (project,
+       build-script: default-build-script(),
+       process-subprojects?: #t,
+       progress-callback:    curry(note-build-progress, $cli, project),
+       error-handler:        curry(compiler-condition-handler, $cli));
+  end if;
+end;
+
+define method deft-clean-project (project :: <string>) => ()
   let p = dylan-project($cli, project);
   if (p)
-    format-out("Cleaning project %s\n", project-name(p));
-    clean-project(p, process-subprojects?: #f);
-  end;
+    deft-clean-project(p);
+  end if;
+end;
+
+define method deft-clean-project (project :: <project-object>) => ()
+  format-out("Cleaning project %s\n", project-name(project));
+  clean-project(project, process-subprojects?: #f);
 end;
 
 define cli-command build ($deft-cli)
