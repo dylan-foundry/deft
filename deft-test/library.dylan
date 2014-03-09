@@ -9,6 +9,9 @@ define library deft-test
   use cli;
 
   use deft-core;
+  use deft-build;
+
+  use environment-protocols;
 
   export deft-test;
 end library;
@@ -20,4 +23,8 @@ define module deft-test
   use cli;
 
   use deft-core;
+  use deft-build;
+
+  use environment-protocols,
+    import: { project-name, project-filename, <project-object> };
 end module;
