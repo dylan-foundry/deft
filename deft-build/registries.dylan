@@ -14,7 +14,7 @@ define function populate-registries () => ()
         format-err("ERROR: registry entries should be strings. Found %=\n", registry-entry);
       end if;
     end for;
-  else
+  elseif (registries)
     format-err("ERROR: 'registries' should be a sequence of strings.\n");
   end if;
 end;
