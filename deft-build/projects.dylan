@@ -122,15 +122,25 @@ define cli-command show project ($deft-cli)
     node-class: <cli-open-dylan-project>;
   implementation
     begin
+      let specified? = project | #f;
       let p = dylan-project($cli, project);
       if (p)
-        format-out("Project %s\n\n", project-name(p));
-        format-out("  class %s\n", object-class(p));
-        format-out("  directory %s\n", project-directory(p));
+        format-out("%s: %s\n",
+                   if (specified?) "Project" else "Current project" end if,
+                   project-name(p));
+        format-out("  class: %s\n", object-class(p));
+        format-out("  target-type: %s\n", project-target-type(p));
+        format-out("\n");
       end;
-      for (p in open-projects())
-        format-out("Open %s\n", project-name(p));
-      end;
+      format-out("Open projects:\n");
+      let ops = open-projects();
+      if (empty?(ops))
+        format-out("  *** None ***\n");
+      else
+        for (p in open-projects())
+          format-out("  %s (%s)\n", project-name(p), project-directory(p));
+        end for;
+      end if;
     end;
 end;
 
