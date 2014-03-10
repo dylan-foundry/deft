@@ -28,10 +28,10 @@ end;
 define function load-test-project (project :: <string>)
   let p = deft-open-project(project);
   if (p)
-    if (project-target-type(p) = #"exe")
+    if (project-target-type(p) = #"executable")
       add!(*tests*, p);
     else
-      format-out("ERROR: %s has a target-type of '%s' rather than 'exe'\n",
+      format-out("ERROR: %s has a target-type of '%s' rather than 'executable'\n",
                  project-name(p), project-target-type(p));
     end if;
   end if;
