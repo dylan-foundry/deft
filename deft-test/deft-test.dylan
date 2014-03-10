@@ -28,7 +28,12 @@ end;
 define function load-test-project (project :: <string>)
   let p = deft-open-project(project);
   if (p)
-    add!(*tests*, p);
+    if (project-target-type(p) = #"exe")
+      add!(*tests*, p);
+    else
+      format-out("ERROR: %s has a target-type of '%s' rather than 'exe'\n",
+                 project-name(p), project-target-type(p));
+    end if;
   end if;
 end;
 
