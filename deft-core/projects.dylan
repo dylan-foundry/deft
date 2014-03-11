@@ -149,7 +149,7 @@ define cli-command show project ($deft-cli)
         format-out("  *** None ***\n");
       else
         for (p in open-projects())
-          format-out("  %s (%s)\n", project-name(p), project-directory(p));
+          format-out("  %s (%s)\n", project-name(p), project-filename(p));
         end for;
       end if;
     end;
