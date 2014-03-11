@@ -66,7 +66,6 @@ define method note-build-progress
   if (item-label & ~empty?(item-label) & item-label ~= last-item-label)
     *lastmsg* := item-label;
     format-out("%s\n", item-label);
-    force-output(*standard-output*);
   end
 end method note-build-progress;
 
@@ -93,7 +92,6 @@ define method compiler-condition-handler
      handler-type == #"link-warning", warning-message :: <string>)
  => (filename :: singleton(#f))
   format-out("%s\n", warning-message);
-  force-output(*standard-output*);
 end method compiler-condition-handler;
 
 define method compiler-condition-handler
@@ -109,5 +107,4 @@ define method compiler-condition-handler
      warning-message :: <string>)
  => (yes? :: <boolean>)
   format-out("missing handler for %s: %s\n", handler-type, warning-message);
-  force-output(*standard-output*);
 end method compiler-condition-handler;
