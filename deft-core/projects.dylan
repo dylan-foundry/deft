@@ -1,4 +1,4 @@
-module: deft-build
+module: deft-core
 synopsis:
 author: Bruce Mitchener, Jr.
 copyright: See LICENSE file in this distribution.
@@ -93,12 +93,23 @@ define function open-project-from-locator (locator :: <file-locator>)
   end;
 end function;
 
+define method note-load-warning
+    (cli :: <dylan-cli>, project :: <project-object>,
+     warning :: <warning-object>)
+ => ();
+  let stream = *standard-output*;
+  new-line(stream);
+  print-environment-object-name(stream, project, warning, full-message?: #t);
+  new-line(stream)
+end method note-load-warning;
+
+
 define function deft-open-project (project :: <string>) => (project)
   let (pobj, invalid?) = open-project-from-locator(as(<file-locator>, project));
   case
     pobj =>
       open-project-compiler-database
-        (pobj, warning-callback: curry(note-compiler-warning, $cli, pobj));
+        (pobj, warning-callback: curry(note-load-warning, $cli, pobj));
 
       pobj.project-opened-by-user? := #t;
 

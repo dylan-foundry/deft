@@ -1,4 +1,4 @@
-module: deft-build
+module: deft-core
 synopsis:
 author: Bruce Mitchener, Jr.
 copyright: See LICENSE file in this distribution.
@@ -19,7 +19,7 @@ define function populate-registries () => ()
   end if;
 end;
 
-define cli-command show build registries ($deft-cli)
+define cli-command show registries ($deft-cli)
   implementation
     begin
       let target-platform = target-platform-name();

@@ -13,14 +13,8 @@ define library deft-build
   use deft-core;
 
   use build-system;
-  use projects;
-  use user-projects;
-  use registry-projects;
   use environment-protocols;
   use environment-reports;
-  use dfmc-common;
-  use dfmc-environment-projects;
-  use dfmc-environment-database;
   use dfmc-back-end-implementations;
 
   export deft-build;
@@ -41,15 +35,11 @@ define module deft-build
 
   use deft-core;
 
-  use build-system, import: { target-platform-name };
-  use projects, import: { default-build-script };
-  use registry-projects, import: { find-registries, registry-location };
+  use build-system, import: { default-build-script };
   use environment-protocols,
     exclude: { application-filename, application-arguments, parameter-name };
   use environment-reports;
 
-  export deft-open-project,
-         deft-clean-project,
-         deft-build-project,
+  export deft-build-project,
          deft-clean-project;
 end module;

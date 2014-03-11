@@ -7,8 +7,16 @@ define library deft-core
   use cli;
   use io;
   use json;
+  use strings;
   use system;
   use release-info;
+
+  use build-system;
+  use dfmc-environment-projects;
+  use environment-protocols;
+  use projects;
+  use user-projects;
+  use registry-projects;
 
   export deft-core;
 end library;
@@ -21,12 +29,28 @@ define module deft-core
   use json;
   use locators;
   use release-info;
+  use standard-io;
   use streams;
+  use strings;
+
+  use build-system, import: { target-platform-name };
+  use environment-protocols,
+    exclude: { application-filename, application-arguments, parameter-name };
+  use registry-projects, import: { find-registries, registry-location };
 
   export $deft-cli;
+
+  export <cli-dylan-project>,
+         <cli-open-dylan-project>,
+         $cli,
+         <dylan-cli>;
 
   export $deft-release-name,
          $deft-release-version;
 
   export deft-config;
+
+  export dylan-project,
+         deft-open-project,
+         deft-close-project;
 end module;
