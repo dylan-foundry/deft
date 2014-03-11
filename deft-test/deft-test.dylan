@@ -67,5 +67,8 @@ end;
 
 define cli-command test ($deft-cli)
   implementation
-    deft-run-test();
+    begin
+      ensure-tests-loaded();
+      deft-run-test();
+    end;
 end;
