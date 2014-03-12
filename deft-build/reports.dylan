@@ -3,10 +3,10 @@ synopsis:
 author: Bruce Mitchener, Jr.
 copyright: See LICENSE file in this distribution.
 
-define class <cli-report-type> (<command-parameter>)
+define class <report-type-parameter> (<command-parameter>)
 end class;
 
-define method node-complete (param :: <cli-report-type>, parser :: <command-parser>, token :: false-or(<command-token>))
+define method node-complete (param :: <report-type-parameter>, parser :: <command-parser>, token :: false-or(<command-token>))
  => (completions :: <list>);
   let names = map(curry(as, <string>), key-sequence(available-reports()));
   let compls =
@@ -21,9 +21,9 @@ end method;
 
 define command report ($deft-commands)
   simple parameter report :: <symbol>,
-    node-class: <cli-report-type>;
+    node-class: <report-type-parameter>;
   named parameter project :: <string>,
-    node-class: <cli-dylan-project>;
+    node-class: <dylan-project-parameter>;
   named parameter format :: <symbol>,
     node-class: <command-oneof>,
     alternatives: #("text", "dot", "html", "xml", "rst");

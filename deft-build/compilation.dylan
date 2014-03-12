@@ -42,14 +42,14 @@ end;
 
 define command build ($deft-commands)
   simple parameter project :: <string>,
-    node-class: <cli-open-dylan-project>;
+    node-class: <open-dylan-project-parameter>;
   implementation
     deft-build-project(project);
 end;
 
 define command clean ($deft-commands)
   simple parameter project :: <string>,
-    node-class: <cli-open-dylan-project>;
+    node-class: <open-dylan-project-parameter>;
   implementation
     deft-clean-project(project);
 end;

@@ -65,7 +65,7 @@ Build
 * How should we pull in the system-provided Jam files and
   runtime libraries rather than having our own copy?
 * Default to less output.
-* Node completion on ``<cli-dylan-project>`` should be against
+* Node completion on ``<dylan-project-parameter>`` should be against
   registries rather than open projects.
 
 New

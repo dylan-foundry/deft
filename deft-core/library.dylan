@@ -40,8 +40,8 @@ define module deft-core
 
   export $deft-commands;
 
-  export <cli-dylan-project>,
-         <cli-open-dylan-project>,
+  export <dylan-project-parameter>,
+         <open-dylan-project-parameter>,
          $deft-context,
          <deft-context>;
 

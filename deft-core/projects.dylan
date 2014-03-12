@@ -23,10 +23,10 @@ end method;
 
 
 
-define class <cli-open-dylan-project> (<command-parameter>)
+define class <open-dylan-project-parameter> (<command-parameter>)
 end class;
 
-define method node-complete (param :: <cli-open-dylan-project>, parser :: <command-parser>, token :: false-or(<command-token>))
+define method node-complete (param :: <open-dylan-project-parameter>, parser :: <command-parser>, token :: false-or(<command-token>))
  => (completions :: <list>);
   let names = map(project-name, open-projects());
   let compls =
@@ -40,10 +40,10 @@ define method node-complete (param :: <cli-open-dylan-project>, parser :: <comma
   as(<list>, compls);
 end method;
 
-define class <cli-dylan-project> (<command-parameter>)
+define class <dylan-project-parameter> (<command-parameter>)
 end class;
 
-define method node-complete (param :: <cli-dylan-project>, parser :: <command-parser>, token :: false-or(<command-token>))
+define method node-complete (param :: <dylan-project-parameter>, parser :: <command-parser>, token :: false-or(<command-token>))
  => (completions :: <list>);
   let names = map(project-name, open-projects());
   let compls =
@@ -124,7 +124,7 @@ end;
 
 define command show project ($deft-commands)
   simple parameter project :: <string>,
-    node-class: <cli-open-dylan-project>;
+    node-class: <open-dylan-project-parameter>;
   implementation
     begin
       let specified? = project | #f;
@@ -151,7 +151,7 @@ end;
 
 define command open ($deft-commands)
   simple parameter project :: <string>,
-    node-class: <cli-dylan-project>;
+    node-class: <dylan-project-parameter>;
   implementation
     begin
       format-out("Opening %s!\n", project);
@@ -165,7 +165,7 @@ end;
 
 define command close ($deft-commands)
   simple parameter project :: <string>,
-    node-class: <cli-open-dylan-project>;
+    node-class: <open-dylan-project-parameter>;
   implementation
     begin
       format-out("Closing %s!\n", project);
