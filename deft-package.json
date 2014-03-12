@@ -5,7 +5,7 @@
     "build"
   ],
   "registries": [
-    "ext/cli/registry",
+    "ext/command-interface/registry",
     "ext/json/registry"
   ]
 }
