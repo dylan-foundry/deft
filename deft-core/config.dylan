@@ -52,7 +52,7 @@ define function deft-config () => (config :: <string-table>)
   *config*
 end function;
 
-define command show deft config ($deft-cli)
+define command show deft config ($deft-commands)
   implementation
     begin
       let stream = make(<string-stream>, direction: #"output");

@@ -50,7 +50,7 @@ define function deft-run-test () => ()
   end for;
 end;
 
-define command show tests ($deft-cli)
+define command show tests ($deft-commands)
   implementation
     begin
       ensure-tests-loaded();
@@ -65,7 +65,7 @@ define command show tests ($deft-cli)
     end;
 end;
 
-define command test ($deft-cli)
+define command test ($deft-commands)
   implementation
     begin
       ensure-tests-loaded();

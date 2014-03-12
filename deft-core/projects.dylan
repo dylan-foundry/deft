@@ -128,7 +128,7 @@ define function deft-close-project (project :: <string>)
   close-project(p);
 end;
 
-define command show project ($deft-cli)
+define command show project ($deft-commands)
   simple parameter project :: <string>,
     node-class: <cli-open-dylan-project>;
   implementation
@@ -155,7 +155,7 @@ define command show project ($deft-cli)
     end;
 end;
 
-define command open ($deft-cli)
+define command open ($deft-commands)
   simple parameter project :: <string>,
     node-class: <cli-dylan-project>;
   implementation
@@ -169,7 +169,7 @@ define command open ($deft-cli)
     end;
 end;
 
-define command close ($deft-cli)
+define command close ($deft-commands)
   simple parameter project :: <string>,
     node-class: <cli-open-dylan-project>;
   implementation

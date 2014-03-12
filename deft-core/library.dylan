@@ -38,7 +38,7 @@ define module deft-core
     exclude: { application-filename, application-arguments, parameter-name };
   use registry-projects, import: { find-registries, registry-location };
 
-  export $deft-cli;
+  export $deft-commands;
 
   export <cli-dylan-project>,
          <cli-open-dylan-project>,

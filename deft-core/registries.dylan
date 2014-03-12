@@ -19,7 +19,7 @@ define function populate-registries () => ()
   end if;
 end;
 
-define command show registries ($deft-cli)
+define command show registries ($deft-commands)
   implementation
     begin
       let target-platform = target-platform-name();
