@@ -4,7 +4,7 @@ author: Bruce Mitchener, Jr.
 copyright: See LICENSE file in this distribution.
 
 define method deft-build-project (project :: <string>) => ()
-  let p = dylan-project($cli, project);
+  let p = dylan-project($deft-context, project);
   if (p)
     deft-build-project(p);
   end if;
@@ -16,20 +16,20 @@ define method deft-build-project (project :: <project-object>) => ()
                     process-subprojects?: #t,
                     link?: #f,
                     save-databases?: #t,
-                    progress-callback:    curry(note-build-progress, $cli, project),
-                    warning-callback:     curry(note-compiler-warning, $cli, project),
-                    error-handler:        curry(compiler-condition-handler, $cli)))
+                    progress-callback:    curry(note-build-progress, $deft-context, project),
+                    warning-callback:     curry(note-compiler-warning, $deft-context, project),
+                    error-handler:        curry(compiler-condition-handler, $deft-context)))
     link-project
       (project,
        build-script: default-build-script(),
        process-subprojects?: #t,
-       progress-callback:    curry(note-build-progress, $cli, project),
-       error-handler:        curry(compiler-condition-handler, $cli));
+       progress-callback:    curry(note-build-progress, $deft-context, project),
+       error-handler:        curry(compiler-condition-handler, $deft-context));
   end if;
 end;
 
 define method deft-clean-project (project :: <string>) => ()
-  let p = dylan-project($cli, project);
+  let p = dylan-project($deft-context, project);
   if (p)
     deft-clean-project(p);
   end if;
@@ -58,7 +58,7 @@ end;
 define variable *lastmsg* = #f;
 
 define method note-build-progress
-    (cli :: <dylan-cli>, project :: <project-object>,
+    (context :: <deft-context>, project :: <project-object>,
      position :: <integer>, range :: <integer>,
      #key heading-label, item-label)
  => ();
@@ -70,7 +70,7 @@ define method note-build-progress
 end method note-build-progress;
 
 define method note-compiler-warning
-    (cli :: <dylan-cli>, project :: <project-object>,
+    (context :: <deft-context>, project :: <project-object>,
      warning :: <warning-object>)
  => ();
   let stream = *standard-output*;
@@ -81,28 +81,28 @@ end method note-compiler-warning;
 
 
 define method compiler-condition-handler
-    (context :: <dylan-cli>,
+    (context :: <deft-context>,
      handler-type == #"link-error", message :: <string>)
  => (filename :: singleton(#f))
   error("Link failed: %s", message)
 end method compiler-condition-handler;
 
 define method compiler-condition-handler
-    (context :: <dylan-cli>,
+    (context :: <deft-context>,
      handler-type == #"link-warning", warning-message :: <string>)
  => (filename :: singleton(#f))
   format-out("%s\n", warning-message);
 end method compiler-condition-handler;
 
 define method compiler-condition-handler
-    (context :: <dylan-cli>,
+    (context :: <deft-context>,
      handler-type == #"fatal-error", message :: <string>)
  => (filename :: singleton(#f))
   error("Fatal error: %s", message)
 end method compiler-condition-handler;
 
 define method compiler-condition-handler
-    (context :: <dylan-cli>,
+    (context :: <deft-context>,
      handler-type :: <symbol>,
      warning-message :: <string>)
  => (yes? :: <boolean>)

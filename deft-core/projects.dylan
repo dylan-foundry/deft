@@ -3,13 +3,7 @@ synopsis:
 author: Bruce Mitchener, Jr.
 copyright: See LICENSE file in this distribution.
 
-define class <dylan-cli> (<object>)
-  slot dylan-current-project :: false-or(<project-object>) = #f;
-end class;
-
-define constant $cli = make(<dylan-cli>);
-
-define method dylan-project-named (cli :: <dylan-cli>, string :: <string>)
+define method dylan-project-named (context :: <deft-context>, string :: <string>)
  => (project :: false-or(<project-object>));
   any?(method (project)
         => (project :: false-or(<project-object>));
@@ -18,12 +12,12 @@ define method dylan-project-named (cli :: <dylan-cli>, string :: <string>)
        open-projects());
 end method;
 
-define method dylan-project (cli :: <dylan-cli>, parameter :: false-or(<string>))
+define method dylan-project (context :: <deft-context>, parameter :: false-or(<string>))
  => (project :: false-or(<project-object>));
   if (parameter)
-    dylan-project-named(cli, parameter);
+    dylan-project-named(context, parameter);
   else
-    dylan-current-project(cli);
+    dylan-current-project(context);
   end;
 end method;
 
@@ -94,7 +88,7 @@ define function open-project-from-locator (locator :: <file-locator>)
 end function;
 
 define method note-load-warning
-    (cli :: <dylan-cli>, project :: <project-object>,
+    (context :: <deft-context>, project :: <project-object>,
      warning :: <warning-object>)
  => ();
   let stream = *standard-output*;
@@ -109,11 +103,11 @@ define function deft-open-project (project :: <string>) => (project)
   case
     pobj =>
       open-project-compiler-database
-        (pobj, warning-callback: curry(note-load-warning, $cli, pobj));
+        (pobj, warning-callback: curry(note-load-warning, $deft-context, pobj));
 
       pobj.project-opened-by-user? := #t;
 
-      dylan-current-project($cli) := pobj;
+      dylan-current-project($deft-context) := pobj;
 
       pobj;
     invalid? =>
@@ -124,7 +118,7 @@ define function deft-open-project (project :: <string>) => (project)
 end;
 
 define function deft-close-project (project :: <string>)
-  let p = dylan-project($cli, project);
+  let p = dylan-project($deft-context, project);
   close-project(p);
 end;
 
@@ -134,7 +128,7 @@ define command show project ($deft-commands)
   implementation
     begin
       let specified? = project | #f;
-      let p = dylan-project($cli, project);
+      let p = dylan-project($deft-context, project);
       if (p)
         format-out("%s: %s\n",
                    if (specified?) "Project" else "Current project" end if,

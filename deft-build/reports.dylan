@@ -29,7 +29,7 @@ define command report ($deft-commands)
     alternatives: #("text", "dot", "html", "xml", "rst");
   implementation
     begin
-      let p  = dylan-project($cli, project);
+      let p  = dylan-project($deft-context, project);
       let info = find-report-info(report);
       unless (format)
         format := #"text";

@@ -42,8 +42,8 @@ define module deft-core
 
   export <cli-dylan-project>,
          <cli-open-dylan-project>,
-         $cli,
-         <dylan-cli>;
+         $deft-context,
+         <deft-context>;
 
   export $deft-release-name,
          $deft-release-version;
