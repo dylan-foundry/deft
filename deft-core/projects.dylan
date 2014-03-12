@@ -29,10 +29,10 @@ end method;
 
 
 
-define class <cli-open-dylan-project> (<cli-parameter>)
+define class <cli-open-dylan-project> (<command-parameter>)
 end class;
 
-define method node-complete (param :: <cli-open-dylan-project>, parser :: <cli-parser>, token :: false-or(<cli-token>))
+define method node-complete (param :: <cli-open-dylan-project>, parser :: <command-parser>, token :: false-or(<command-token>))
  => (completions :: <list>);
   let names = map(project-name, open-projects());
   let compls =
@@ -46,10 +46,10 @@ define method node-complete (param :: <cli-open-dylan-project>, parser :: <cli-p
   as(<list>, compls);
 end method;
 
-define class <cli-dylan-project> (<cli-parameter>)
+define class <cli-dylan-project> (<command-parameter>)
 end class;
 
-define method node-complete (param :: <cli-dylan-project>, parser :: <cli-parser>, token :: false-or(<cli-token>))
+define method node-complete (param :: <cli-dylan-project>, parser :: <command-parser>, token :: false-or(<command-token>))
  => (completions :: <list>);
   let names = map(project-name, open-projects());
   let compls =
@@ -128,7 +128,7 @@ define function deft-close-project (project :: <string>)
   close-project(p);
 end;
 
-define cli-command show project ($deft-cli)
+define command show project ($deft-cli)
   simple parameter project :: <string>,
     node-class: <cli-open-dylan-project>;
   implementation
@@ -155,7 +155,7 @@ define cli-command show project ($deft-cli)
     end;
 end;
 
-define cli-command open ($deft-cli)
+define command open ($deft-cli)
   simple parameter project :: <string>,
     node-class: <cli-dylan-project>;
   implementation
@@ -169,7 +169,7 @@ define cli-command open ($deft-cli)
     end;
 end;
 
-define cli-command close ($deft-cli)
+define command close ($deft-cli)
   simple parameter project :: <string>,
     node-class: <cli-open-dylan-project>;
   implementation

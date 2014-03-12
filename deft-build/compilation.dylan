@@ -40,14 +40,14 @@ define method deft-clean-project (project :: <project-object>) => ()
   clean-project(project, process-subprojects?: #f);
 end;
 
-define cli-command build ($deft-cli)
+define command build ($deft-cli)
   simple parameter project :: <string>,
     node-class: <cli-open-dylan-project>;
   implementation
     deft-build-project(project);
 end;
 
-define cli-command clean ($deft-cli)
+define command clean ($deft-cli)
   simple parameter project :: <string>,
     node-class: <cli-open-dylan-project>;
   implementation

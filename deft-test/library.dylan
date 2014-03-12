@@ -6,7 +6,7 @@ define library deft-test
   use common-dylan;
   use io;
 
-  use cli;
+  use command-system;
 
   use deft-core;
   use deft-build;
@@ -20,7 +20,7 @@ define module deft-test
   use common-dylan, exclude: { format-to-string };
   use format-out;
 
-  use cli;
+  use command-system;
 
   use deft-core;
   use deft-build;

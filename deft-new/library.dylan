@@ -4,7 +4,7 @@ copyright: See LICENSE file in this distribution.
 
 define library deft-new
   use common-dylan;
-  use cli;
+  use command-system;
   use io;
 
   use deft-core;
@@ -14,7 +14,7 @@ end library;
 
 define module deft-new
   use common-dylan, exclude: { format-to-string };
-  use cli;
+  use command-system;
   use format-out;
 
   use deft-core;

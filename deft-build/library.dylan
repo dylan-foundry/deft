@@ -8,7 +8,7 @@ define library deft-build
   use system;
   use strings;
 
-  use cli;
+  use command-system;
 
   use deft-core;
 
@@ -31,7 +31,7 @@ define module deft-build
   use locators;
   use strings;
 
-  use cli;
+  use command-system;
 
   use deft-core;
 

@@ -4,8 +4,10 @@ copyright: See LICENSE file in this distribution.
 
 define library deft
   use common-dylan;
-  use cli;
   use io;
+
+  use command-system;
+  use tty;
 
   use deft-core;
 
@@ -17,9 +19,10 @@ end library;
 
 define module deft
   use common-dylan, exclude: { format-to-string };
-  use cli;
-  use tty;
   use format-out;
+
+  use command-system;
+  use tty;
 
   use deft-core;
 

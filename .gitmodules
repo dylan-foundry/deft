@@ -2,8 +2,8 @@
 	path = ext/http
 	url = git://github.com/dylan-lang/http.git
 [submodule "ext/cli"]
-	path = ext/cli
-	url = https://github.com/promovicz/dylan-cli.git
+	path = ext/command-interface
+	url = https://github.com/dylan-lang/command-interface.git
 [submodule "ext/json"]
 	path = ext/json
 	url = https://github.com/dylan-lang/json.git
