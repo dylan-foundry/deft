@@ -9,6 +9,8 @@ define library deft-dfmc
 
   use deft-core;
 
+  use dfmc-flow-graph;
+
   export deft-dfmc;
 end library;
 
@@ -16,6 +18,8 @@ define module deft-dfmc
   use common-dylan, exclude: { format-to-string };
   use command-system;
   use format-out;
+
+  use dfmc-flow-graph;
 
   use deft-core;
 end module;
