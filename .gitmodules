@@ -7,3 +7,6 @@
 [submodule "ext/json"]
 	path = ext/json
 	url = https://github.com/dylan-lang/json.git
+[submodule "ext/serialization"]
+	path = ext/serialization
+	url = https://github.com/dylan-foundry/serialization.git

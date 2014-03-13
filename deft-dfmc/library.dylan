@@ -6,9 +6,12 @@ define library deft-dfmc
   use common-dylan;
   use command-system;
   use io;
+  use serialization;
 
   use deft-core;
 
+  use dfmc-debug-back-end;
+  use dfmc-definitions;
   use dfmc-flow-graph;
 
   export deft-dfmc;
@@ -18,8 +21,14 @@ define module deft-dfmc
   use common-dylan, exclude: { format-to-string };
   use command-system;
   use format-out;
-
-  use dfmc-flow-graph;
+  use json-serialization;
+  use print;
+  use standard-io;
+  use streams;
 
   use deft-core;
+
+  use dfmc-debug-back-end;
+  use dfmc-definitions, import: { <signature-spec> };
+  use dfmc-flow-graph;
 end module;

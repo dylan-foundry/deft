@@ -8,7 +8,7 @@ LIB_SOURCES = $(wildcard */*.dylan) \
 TEST_SOURES = $(wildcard tests/*.dylan) \
               $(wildcard tests/*.lid)
 
-REGISTRIES = `pwd`/registry:`pwd`/ext/command-interface/registry:`pwd`/ext/json/registry
+REGISTRIES = `pwd`/registry:`pwd`/ext/command-interface/registry:`pwd`/ext/json/registry:`pwd`/ext/serialization/registry
 
 build: $(LIB_SOURCES)
 	OPEN_DYLAN_USER_REGISTRIES=$(REGISTRIES) dylan-compiler -build deft
