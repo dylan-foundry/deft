@@ -5,7 +5,7 @@ all: build
 APP_SOURCES = $(wildcard */*.dylan) \
               $(wildcard */*.lid)
 
-REGISTRIES = `pwd`/registry:`pwd`/ext/command-interface/registry:`pwd`/ext/json/registry:`pwd`/ext/serialization/registry
+REGISTRIES = `pwd`/registry:`pwd`/ext/command-interface/registry:`pwd`/ext/json/registry:`pwd`/ext/serialization/registry:`pwd`/ext/http/registry
 
 build: $(APP_SOURCES)
 	OPEN_DYLAN_USER_REGISTRIES=$(REGISTRIES) dylan-compiler -build deft
