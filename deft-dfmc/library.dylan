@@ -9,10 +9,14 @@ define library deft-dfmc
   use serialization;
 
   use deft-core;
+  use deft-server;
 
   use dfmc-debug-back-end;
   use dfmc-definitions;
   use dfmc-flow-graph;
+
+  use http-common;
+  use http-server;
 
   export deft-dfmc;
 end library;
@@ -27,8 +31,12 @@ define module deft-dfmc
   use streams;
 
   use deft-core;
+  use deft-server;
 
   use dfmc-debug-back-end;
   use dfmc-definitions, import: { <signature-spec> };
   use dfmc-flow-graph;
+
+  use http-common, import: { quote-html };
+  use http-server, import: { <sse-resource>, sse-push-event };
 end module;
