@@ -6,7 +6,7 @@ define library deft
   use common-dylan;
   use io;
 
-  use command-system;
+  use command-interface;
   use tty;
 
   use deft-core;
@@ -22,7 +22,7 @@ define module deft
   use common-dylan, exclude: { format-to-string };
   use format-out;
 
-  use command-system;
+  use command-interface;
   use tty;
 
   use deft-core;
