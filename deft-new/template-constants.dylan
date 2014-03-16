@@ -28,6 +28,7 @@ define constant $library-template-simple :: <string>
 
 define constant $lid-template-simple :: <string>
   = ("Library: %s\n"
+     "Target-Type: %s\n"
      "Files: %s\n"
      "       %s\n");
 

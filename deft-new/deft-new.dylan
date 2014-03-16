@@ -32,7 +32,7 @@ define function write-templates (#rest templates :: <template>) => ();
   end for;
 end function write-templates;
 
-define function make-dylan-app (app-name :: <string>) => ()
+define function make-dylan-app (app-name :: <string>, #key type) => ()
   let project-dir = create-directory(working-directory(), app-name);
 
   local method to-target-path (#rest args) => (target)
@@ -54,7 +54,7 @@ define function make-dylan-app (app-name :: <string>) => ()
     = make(<template>,
            output-path: to-target-path(app-name, ".lid"),
            constant-string: $lid-template-simple,
-           arguments: list(app-name, "library", app-name));
+           arguments: list(app-name, type, "library", app-name));
 
   write-templates(main, lib, lid);
 
@@ -98,10 +98,10 @@ define function is-valid-dylan-name? (word :: <string>) => (name? :: <boolean>)
   end case;
 end function is-valid-dylan-name?;
 
-define function generate-project (project-name :: <string>)
+define function generate-project (project-name :: <string>, #key type)
   if (is-valid-dylan-name?(project-name))
     block ()
-      make-dylan-app(project-name);
+      make-dylan-app(project-name, type: type);
     exception (condition :: <condition>)
       format-err("error: %=\n", condition);
     end block;
@@ -114,6 +114,14 @@ define command new application ($deft-commands)
   simple parameter project-name :: <string>;
   implementation
     begin
-      generate-project(project-name);
+      generate-project(project-name, type: #"executable");
+    end;
+end;
+
+define command new library ($deft-commands)
+  simple parameter project-name :: <string>;
+  implementation
+    begin
+      generate-project(project-name, type: #"dll");
     end;
 end;
