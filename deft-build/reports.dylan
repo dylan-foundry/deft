@@ -7,7 +7,7 @@ define class <report-type-parameter> (<command-parameter>)
 end class;
 
 define method node-complete (param :: <report-type-parameter>, parser :: <command-parser>, token :: false-or(<command-token>))
- => (completions :: <list>);
+ => (completions :: <command-completion>)
   let names = map(curry(as, <string>), key-sequence(available-reports()));
   let compls =
     if (token)
@@ -16,7 +16,7 @@ define method node-complete (param :: <report-type-parameter>, parser :: <comman
     else
       names;
     end;
-  as(<list>, compls);
+  make-completion(param, token, complete-options: compls, exhaustive?: #t)
 end method;
 
 define command report ($deft-commands)
