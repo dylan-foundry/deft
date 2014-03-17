@@ -103,10 +103,10 @@ define function generate-project (project-name :: <string>, #key type)
     block ()
       make-dylan-app(project-name, type: type);
     exception (condition :: <condition>)
-      format-err("error: %=\n", condition);
+      error("%=", condition);
     end block;
   else
-    format-err("error: Invalid name! Please use a valid Dylan library name.\n");
+    error("Invalid name! Please use a valid Dylan library name.");
   end if;
 end;
 
