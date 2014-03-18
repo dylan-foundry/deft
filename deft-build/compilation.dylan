@@ -3,7 +3,7 @@ synopsis:
 author: Bruce Mitchener, Jr.
 copyright: See LICENSE file in this distribution.
 
-define method deft-build-project (project :: <string>) => ()
+define method deft-build-project (project :: false-or(<string>)) => ()
   let p = dylan-project($deft-context, project);
   if (p)
     deft-build-project(p);
@@ -28,7 +28,7 @@ define method deft-build-project (project :: <project-object>) => ()
   end if;
 end;
 
-define method deft-clean-project (project :: <string>) => ()
+define method deft-clean-project (project :: false-or(<string>)) => ()
   let p = dylan-project($deft-context, project);
   if (p)
     deft-clean-project(p);
