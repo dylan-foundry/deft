@@ -151,6 +151,7 @@ end;
 
 define command open ($deft-commands)
   simple parameter project :: <string>,
+    required?: #t,
     node-class: <dylan-project-parameter>;
   implementation
     begin
@@ -165,6 +166,7 @@ end;
 
 define command close ($deft-commands)
   simple parameter project :: <string>,
+    required?: #t,
     node-class: <open-dylan-project-parameter>;
   implementation
     begin
