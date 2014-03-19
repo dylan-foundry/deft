@@ -119,7 +119,11 @@ end;
 
 define function deft-close-project (project :: <string>)
   let p = dylan-project($deft-context, project);
-  close-project(p);
+  if (p)
+    close-project(p);
+  else
+    error("Project '%s' is not open.", project);
+  end if;
 end;
 
 define command show project ($deft-commands)
