@@ -12,6 +12,7 @@ end;
 
 define method deft-build-project (project :: <project-object>) => ()
   format-out("Building project %s\n", project-name(project));
+  force-out();
   if (build-project(project,
                     process-subprojects?: #t,
                     link?: #f,

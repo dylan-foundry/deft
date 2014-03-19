@@ -22,6 +22,8 @@ define function ensure-tests-loaded () => ()
     elseif (tests)
       format-err("ERROR: 'tests' should be a sequence of strings.\n");
     end if;
+    force-out();
+    force-err();
   end if;
 end;
 
@@ -31,7 +33,7 @@ define function load-test-project (project :: <string>)
     if (project-target-type(p) = #"executable")
       add!(*tests*, p);
     else
-      format-out("ERROR: %s has a target-type of '%s' rather than 'executable'\n",
+      format-err("ERROR: %s has a target-type of '%s' rather than 'executable'\n",
                  project-name(p), project-target-type(p));
     end if;
   end if;
