@@ -15,6 +15,7 @@ build: $(APP_SOURCES)
 	cp -fp $(OPEN_DYLAN_DIR)/lib/*.jam _build/lib/
 	cp -rfp $(OPEN_DYLAN_DIR)/lib/runtime _build/lib/runtime
 	cp -rfp $(OPEN_DYLAN_DIR)/include _build/include
+	ln -fs $(OPEN_DYLAN_DIR)/sources _build/sources
 
 clean:
 	rm -rf _build/bin/deft*
