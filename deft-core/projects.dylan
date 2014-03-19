@@ -97,23 +97,38 @@ define method note-load-warning
   new-line(stream)
 end method note-load-warning;
 
+define method note-load-error
+    (context :: <deft-context>, project :: <project-object>,
+     handler-type == #"project-not-found", library-name :: <string>)
+ => (filename :: false-or(<file-locator>))
+  error("Could not find project '%s'.", library-name);
+end method note-load-error;
 
-define function deft-open-project (project :: <string>) => (project)
-  let (pobj, invalid?) = open-project-from-locator(as(<file-locator>, project));
+define method note-load-error
+    (context :: <deft-context>, project :: <project-object>,
+     handler-type == #"project-file-not-found", filename :: <string>)
+ => (filename :: false-or(<file-locator>))
+  error("Could not find project file '%s'", filename);
+end method note-load-error;
+
+define function deft-open-project (project-name :: <string>) => (project)
+  let (project, invalid?) = open-project-from-locator(as(<file-locator>, project-name));
   case
-    pobj =>
+    project =>
       open-project-compiler-database
-        (pobj, warning-callback: curry(note-load-warning, $deft-context, pobj));
+        (project,
+         warning-callback: curry(note-load-warning, $deft-context, project),
+         error-handler: curry(note-load-error, $deft-context, project));
 
-      pobj.project-opened-by-user? := #t;
+      project.project-opened-by-user? := #t;
 
-      dylan-current-project($deft-context) := pobj;
+      dylan-current-project($deft-context) := project;
 
-      pobj;
+      project;
     invalid? =>
-      error("Cannot open '%s' as it is not a project", project);
+      error("Cannot open '%s' as it is not a project", project-name);
     otherwise =>
-      error("Unable to open project '%s'", project);
+      error("Unable to open project '%s'", project-name);
   end
 end;
 
