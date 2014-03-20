@@ -53,6 +53,7 @@ define function deft-run-test () => ()
 end;
 
 define command show tests ($deft-commands)
+  help "Show the current test projects.";
   implementation
     begin
       ensure-tests-loaded();
@@ -68,6 +69,7 @@ define command show tests ($deft-commands)
 end;
 
 define command test ($deft-commands)
+  help "Build and run the current set of test projects.";
   implementation
     begin
       ensure-tests-loaded();

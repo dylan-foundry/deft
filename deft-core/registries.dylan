@@ -20,6 +20,7 @@ define function populate-registries () => ()
 end;
 
 define command show registries ($deft-commands)
+  help "Show the registries used by the build system.";
   implementation
     begin
       let target-platform = target-platform-name();

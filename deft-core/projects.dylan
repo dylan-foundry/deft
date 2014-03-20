@@ -142,7 +142,9 @@ define function deft-close-project (project :: <string>)
 end;
 
 define command show project ($deft-commands)
+  help "Show the specfied and open projects.";
   simple parameter project :: <string>,
+    help: "The project to show. Defaults to the current project.",
     node-class: <open-dylan-project-parameter>;
   implementation
     begin
@@ -169,7 +171,9 @@ define command show project ($deft-commands)
 end;
 
 define command open ($deft-commands)
+  help "Open a project.";
   simple parameter project :: <string>,
+    help: "The project to open. This should be in one of the registries. (`show registries`)",
     required?: #t,
     node-class: <dylan-project-parameter>;
   implementation
@@ -184,7 +188,9 @@ define command open ($deft-commands)
 end;
 
 define command close ($deft-commands)
+  help "Close a project.";
   simple parameter project :: <string>,
+    help: "The project to close.",
     required?: #t,
     node-class: <open-dylan-project-parameter>;
   implementation
