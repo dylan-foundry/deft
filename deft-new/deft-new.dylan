@@ -111,7 +111,9 @@ define function generate-project (project-name :: <string>, #key type)
 end;
 
 define command new application ($deft-commands)
-  simple parameter project-name :: <string>;
+  help "Create a skeleton application project.";
+  simple parameter project-name :: <string>,
+    help: "The name of the project to create.";
   implementation
     begin
       generate-project(project-name, type: #"executable");
@@ -119,7 +121,9 @@ define command new application ($deft-commands)
 end;
 
 define command new library ($deft-commands)
-  simple parameter project-name :: <string>;
+  help "Create a skeleton library project.";
+  simple parameter project-name :: <string>,
+    help: "The name of the project to create.";
   implementation
     begin
       generate-project(project-name, type: #"dll");

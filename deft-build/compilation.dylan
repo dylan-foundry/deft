@@ -42,14 +42,18 @@ define method deft-clean-project (project :: <project-object>) => ()
 end;
 
 define command build ($deft-commands)
+  help "Build a project";
   simple parameter project :: <string>,
+    help: "The project to build. If not specified, defaults to the current project.",
     node-class: <open-dylan-project-parameter>;
   implementation
     deft-build-project(project);
 end;
 
 define command clean ($deft-commands)
+  help "Remove the build results from a project. This is not (currently) recursive.";
   simple parameter project :: <string>,
+    help: "The project to clean. If not specified, defaults to the current project.",
     node-class: <open-dylan-project-parameter>;
   implementation
     deft-clean-project(project);
