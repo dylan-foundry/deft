@@ -19,6 +19,23 @@ define method node-complete (param :: <report-type-parameter>, parser :: <comman
   make-completion(param, token, complete-options: compls, exhaustive?: #t)
 end method;
 
+define command show reports ($deft-commands)
+  help "Show available reports.";
+  implementation
+    begin
+      for (report in key-sequence(available-reports()))
+        let info = find-report-info(report);
+        let formats = join(map(method (f) as(<string>, f) end,
+                               info.report-info-formats),
+                           ", ");
+        format-out("%s - %s\n  Formats: %s\n",
+                   info.report-info-name,
+                   info.report-info-title,
+                   formats);
+      end for;
+    end;
+end;
+
 define command report ($deft-commands)
   simple parameter report :: <symbol>,
     node-class: <report-type-parameter>;
