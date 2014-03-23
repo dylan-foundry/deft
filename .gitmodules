@@ -10,3 +10,6 @@
 [submodule "ext/serialization"]
 	path = ext/serialization
 	url = https://github.com/dylan-foundry/serialization.git
+[submodule "deft-dfmc/static/graph"]
+	path = deft-dfmc/static/graph
+	url = https://github.com/hannesm/graph.js.git

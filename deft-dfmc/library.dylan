@@ -7,6 +7,7 @@ define library deft-dfmc
   use command-interface;
   use io;
   use serialization;
+  use system;
 
   use deft-core;
   use deft-server;
@@ -26,6 +27,7 @@ define module deft-dfmc
   use command-interface;
   use format-out;
   use json-serialization;
+  use locators;
   use print;
   use standard-io;
   use streams;
@@ -38,5 +40,9 @@ define module deft-dfmc
   use dfmc-flow-graph;
 
   use http-common, import: { quote-html };
-  use http-server, import: { <sse-resource>, sse-push-event };
+  use http-server, import: {
+    <directory-resource>,
+    <sse-resource>,
+    sse-push-event
+  };
 end module;

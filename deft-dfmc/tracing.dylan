@@ -4,6 +4,7 @@ author: Bruce Mitchener, Jr.
 copyright: See LICENSE file in this distribution.
 
 define variable *dfmc-tracing-enabled?* :: <boolean> = #f;
+define variable *dfmc-tracing-http-configured?* :: <boolean> = #f;
 
 define constant $stream-resource = make(<sse-resource>);
 
@@ -55,8 +56,20 @@ define command dfmc trace clear ($deft-commands)
 end;
 
 define function ensure-http-configured ()
-  deft-server-ensure-started();
-  deft-server-add-resource("/events", $stream-resource);
+  unless (*dfmc-tracing-http-configured?*)
+    deft-server-ensure-started();
+    deft-server-add-resource("/dfmc-tracing/events", $stream-resource);
+    let exe-directory = locator-directory(as(<file-locator>, application-filename()));
+    let base-directory = locator-directory(exe-directory);
+    let share-directory = subdirectory-locator(base-directory, "share");
+    let static-directory = subdirectory-locator(share-directory, "static");
+    let tracing-directory = subdirectory-locator(static-directory, "dfmc-tracing");
+    let static-resource = make(<directory-resource>,
+                               directory: tracing-directory,
+                               allow-directory-listing?: #f);
+    deft-server-add-resource("/dfmc-tracing/", static-resource);
+    *dfmc-tracing-http-configured?* := #t;
+  end unless;
 end;
 
 define function write-to-standard-output (data)

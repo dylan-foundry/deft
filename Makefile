@@ -16,6 +16,9 @@ build: $(APP_SOURCES)
 	cp -rfp $(OPEN_DYLAN_DIR)/lib/runtime _build/lib/runtime
 	cp -rfp $(OPEN_DYLAN_DIR)/include _build/include
 	ln -fs $(OPEN_DYLAN_DIR)/sources _build/sources
+	# deft-dfmc/tracing stuff:
+	mkdir -p _build/share/static/dfmc-tracing
+	cp -rp deft-dfmc/static/* _build/share/static/dfmc-tracing/
 
 clean:
 	rm -rf _build/bin/deft*
