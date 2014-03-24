@@ -99,6 +99,13 @@ end method note-load-warning;
 
 define method note-load-error
     (context :: <deft-context>, project :: <project-object>,
+     handler-type == #"warning", message :: <string>)
+ => ();
+  format-err("%s", message);
+end method note-load-error;
+
+define method note-load-error
+    (context :: <deft-context>, project :: <project-object>,
      handler-type == #"project-not-found", library-name :: <string>)
  => (filename :: false-or(<file-locator>))
   error("Could not find project '%s'.", library-name);
