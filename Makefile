@@ -13,9 +13,9 @@ build: $(APP_SOURCES)
 	OPEN_DYLAN_USER_REGISTRIES=$(REGISTRIES) dylan-compiler -build deft
 	# Install things we need to be able to build
 	cp -fp $(OPEN_DYLAN_DIR)/lib/*.jam _build/lib/
-	cp -rfp $(OPEN_DYLAN_DIR)/lib/runtime _build/lib/runtime
-	cp -rfp $(OPEN_DYLAN_DIR)/include _build/include
-	ln -fs $(OPEN_DYLAN_DIR)/sources _build/sources
+	cp -rfp $(OPEN_DYLAN_DIR)/lib/runtime _build/lib/
+	cp -rfp $(OPEN_DYLAN_DIR)/include _build/
+	ln -fs $(OPEN_DYLAN_DIR)/sources _build/
 	# deft-dfmc/tracing stuff:
 	mkdir -p _build/share/static/dfmc-tracing
 	cp -rp deft-dfmc/static/* _build/share/static/dfmc-tracing/
