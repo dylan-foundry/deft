@@ -48,7 +48,7 @@ define function deft-run-test () => ()
     end block;
   end for;
   for (test-project in *tests*)
-    format-out("Running %s...\n", test-project.project-name)
+    format-out("Running %s...\n", test-project.project-executable-name)
   end for;
 end;
 

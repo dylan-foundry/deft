@@ -27,6 +27,7 @@ define module deft-test
 
   use environment-protocols,
     import: { project-name, project-filename,
+              project-executable-name,
               project-target-type,
               <project-object> };
 end module;
