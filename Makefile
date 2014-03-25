@@ -4,6 +4,8 @@ all: build
 
 OPEN_DYLAN_DIR=$(realpath $(dir $(realpath $(shell which dylan-compiler)))/..)
 
+INSTALL_DIR = /opt/deft
+
 APP_SOURCES = $(wildcard */*.dylan) \
               $(wildcard */*.lid)
 
@@ -24,3 +26,12 @@ clean:
 	rm -rf _build/bin/deft*
 	rm -rf _build/lib/*deft*
 	rm -rf _build/build/deft*
+
+install:
+	mkdir -p $(INSTALL_DIR)
+	cp -rp _build/bin $(INSTALL_DIR)/
+	cp -rfp _build/lib $(INSTALL_DIR)/
+	cp -rp _build/share $(INSTALL_DIR)/
+	cp -rp _build/databases $(INSTALL_DIR)/
+	cp -rfp _build/include $(INSTALL_DIR)/
+	ln -fs $(OPEN_DYLAN_DIR)/sources $(INSTALL_DIR)/
