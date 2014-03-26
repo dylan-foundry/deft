@@ -48,7 +48,13 @@ define function deft-run-test () => ()
     end block;
   end for;
   for (test-project in *tests*)
-    format-out("Running %s...\n", test-project.project-executable-name)
+    format-out("Running %s...\n", test-project.project-executable-name);
+    force-out();
+    // We use format-out as write to *standard-output* doesn't expand the newline correctly.
+    run-application(concatenate("_build/bin/", test-project.project-executable-name),
+                    outputter: method (text, #key end: count)
+                                 format-out("%s", text);
+                               end);
   end for;
 end;
 
