@@ -3,10 +3,27 @@ synopsis:
 author: Bruce Mitchener, Jr.
 copyright: See LICENSE file in this distribution.
 
+define function load-default-target () => (project :: false-or(<project-object>))
+  let config = deft-config();
+  let default-target = element(config, "default-target", default: #f);
+  if (default-target & instance?(default-target, <string>))
+    deft-open-project(default-target)
+  elseif (default-target)
+    format-err("ERROR: default-target should be a string.\n");
+    force-err();
+    #f
+  end if
+end;
+
 define method deft-build-project (project :: false-or(<string>)) => ()
   let p = dylan-project($deft-context, project);
   if (p)
     deft-build-project(p);
+  else
+    let p = load-default-target();
+    if (p)
+      deft-build-project(p);
+    end if;
   end if;
 end;
 

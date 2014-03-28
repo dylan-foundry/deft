@@ -4,6 +4,7 @@
   "keywords": [
     "build"
   ],
+  "default-target": "deft",
   "registries": [
     "ext/command-interface/registry",
     "ext/json/registry",
