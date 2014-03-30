@@ -4,6 +4,7 @@
   "keywords": [
     "build"
   ],
+  "license": "MIT",
   "default-target": "deft",
   "registries": [
     "ext/command-interface/registry",

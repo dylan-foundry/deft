@@ -55,8 +55,13 @@ define function make-dylan-app (app-name :: <string>, #key type) => ()
            output-path: to-target-path(app-name, ".lid"),
            constant-string: $lid-template-simple,
            arguments: list(app-name, type, "library", app-name));
+  let license :: <template>
+    = make(<template>,
+           output-path: to-target-path("LICENSE"),
+           constant-string: $mit-license-template,
+           arguments: list());
 
-  write-templates(main, lib, lid);
+  write-templates(main, lib, lid, license);
 
   write-registry(project-dir, app-name);
 end function make-dylan-app;
