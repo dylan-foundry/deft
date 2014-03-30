@@ -55,3 +55,7 @@ define constant $mit-license-template :: <string>
      "FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS\n"
      "IN THE SOFTWARE.\n");
 
+define constant $gitignore-template :: <string>
+ = ("_build\n"
+    "*.hdp\n"
+    "deft-package-local.json\n");

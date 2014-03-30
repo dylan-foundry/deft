@@ -60,8 +60,13 @@ define function make-dylan-app (app-name :: <string>, #key type) => ()
            output-path: to-target-path("LICENSE"),
            constant-string: $mit-license-template,
            arguments: list());
+  let gitignore :: <template>
+    = make(<template>,
+           output-path: to-target-path(".gitignore"),
+           constant-string: $gitignore-template,
+           arguments: list());
 
-  write-templates(main, lib, lid, license);
+  write-templates(main, lib, lid, license, gitignore);
 
   write-registry(project-dir, app-name);
 end function make-dylan-app;
