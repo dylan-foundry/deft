@@ -49,7 +49,7 @@ define function make-dylan-app (app-name :: <string>, #key type) => ()
     = make(<template>,
            output-path: to-target-path("library.dylan"),
            constant-string: $library-template-simple,
-           arguments: list(app-name, app-name));
+           arguments: list(app-name, app-name, app-name));
   let lid :: <template>
     = make(<template>,
            output-path: to-target-path(app-name, ".lid"),

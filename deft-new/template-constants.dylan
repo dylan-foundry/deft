@@ -19,6 +19,8 @@ define constant $library-template-simple :: <string>
      "define library %s\n"
      "  use common-dylan;\n"
      "  use io;\n"
+     "\n"
+     "  export %s;\n"
      "end library;\n"
      "\n"
      "define module %s\n"
