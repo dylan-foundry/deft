@@ -77,5 +77,71 @@ define constant $deft-package-json-template :: <string>
     "  \"license\": \"MIT\",\n"
     "  \"default-target\": \"%s\",\n"
     "  \"tests\": [\n"
+    "%s"
     "  ]\n"
     "}\n");
+
+define constant $test-suite-app-library-template :: <string>
+ = ("module: dylan-user\n"
+    "\n"
+    "define library %s-test-suite-app\n"
+    "  use testworks;\n"
+    "  use %s-test-suite;\n"
+    "end library;\n"
+    "\n"
+    "define module %s-test-suite-app\n"
+    "  use testworks;\n"
+    "  use %s-test-suite;\n"
+    "end module;\n");
+
+define constant $test-suite-app-template :: <string>
+ = ("module: %s-test-suite-app\n"
+    "\n"
+    "define suite all-%s-test-suites ()\n"
+    "  suite %s-test-suite;\n"
+    "end;\n"
+    "\n"
+    "run-test-application(all-%s-test-suites);\n");
+
+define constant $test-suite-app-lid-template :: <string>
+ = ("library: %s-test-suite-app\n"
+    "executable: %s-test-suite-app\n"
+    "files: %s-test-suite-app-library\n"
+    "       %s-test-suite-app\n");
+
+define constant $test-suite-library-template :: <string>
+ = ("module: dylan-user\n"
+    "\n"
+    "define library %s-test-suite\n"
+    "  use common-dylan;\n"
+    "  use %s;\n"
+    "  use testworks;\n"
+    "  use system;\n"
+    "\n"
+    "  export %s-test-suite;\n"
+    "end library;\n"
+    "\n"
+    "define module %s-test-suite\n"
+    "  use common-dylan;\n"
+    "  use %s;\n"
+    "  use testworks;\n"
+    "\n"
+    "  export %s-test-suite;\n"
+    "end module;\n");
+
+define constant $test-suite-template :: <string>
+ = ("module: %s-test-suite\n"
+    "synopsis: Test suite for the %s library.\n"
+    "\n"
+    "define test example-test ()\n"
+    "  assert-true(#t);\n"
+    "end test example-test;\n"
+    "\n"
+    "define suite %s-test-suite ()\n"
+    "  test example-test;\n"
+    "end suite;\n");
+
+define constant $test-suite-lid-template :: <string>
+ = ("library: %s-test-suite\n"
+    "files: %s-test-suite-library\n"
+    "       %s-test-suite\n");

@@ -32,8 +32,19 @@ define function write-templates (#rest templates :: <template>) => ();
   end for;
 end function write-templates;
 
+define function create-directory?
+    (directory :: <directory-locator>, subdirectory-name :: <string>)
+ => (subdirectory :: <directory-locator>)
+  let subdirectory = subdirectory-locator(directory, subdirectory-name);
+  if (file-exists?(subdirectory))
+    subdirectory
+  else
+    create-directory(directory, subdirectory-name)
+  end if
+end;
+
 define function make-dylan-app (app-name :: <string>, #key type) => ()
-  let project-dir = create-directory(working-directory(), app-name);
+  let project-dir = create-directory?(working-directory(), app-name);
 
   local method to-target-path (#rest args) => (target)
           merge-locators(as(<file-locator>, apply(concatenate, args)),
@@ -41,7 +52,7 @@ define function make-dylan-app (app-name :: <string>, #key type) => ()
         end method to-target-path;
 
   let main-template-text
-    = if (type == "executable")
+    = if (type == #"executable")
         $main-executable-template-simple
       else
         $main-dll-template-simple
@@ -72,25 +83,71 @@ define function make-dylan-app (app-name :: <string>, #key type) => ()
            output-path: to-target-path(".gitignore"),
            constant-string: $gitignore-template,
            arguments: list());
+
+  let test-entries
+    = if (type == #"dll")
+        format-to-string("    \"%s-test-suite-app\"\n", app-name)
+      else
+        ""
+      end if;
+
   let deft-package-json :: <template>
     = make(<template>,
            output-path: to-target-path("deft-package.json"),
            constant-string: $deft-package-json-template,
-           arguments: list(app-name, app-name));
+           arguments: list(app-name, app-name, test-entries));
+  let test-suite-app-library :: <template>
+    = make(<template>,
+           output-path: to-target-path("tests/", format-to-string("%s-test-suite-app-library.dylan", app-name)),
+           constant-string: $test-suite-app-library-template,
+           arguments: list(app-name, app-name, app-name, app-name));
+  let test-suite-app :: <template>
+    = make(<template>,
+           output-path: to-target-path("tests/", format-to-string("%s-test-suite-app.dylan", app-name)),
+           constant-string: $test-suite-app-template,
+           arguments: list(app-name, app-name, app-name, app-name));
+  let test-suite-app-lid :: <template>
+    = make(<template>,
+           output-path: to-target-path("tests/", format-to-string("%s-test-suite-app.lid", app-name)),
+           constant-string: $test-suite-app-lid-template,
+           arguments: list(app-name, app-name, app-name, app-name));
+  let test-suite-library :: <template>
+    = make(<template>,
+           output-path: to-target-path("tests/", format-to-string("%s-test-suite-library.dylan", app-name)),
+           constant-string: $test-suite-library-template,
+           arguments: list(app-name, app-name, app-name, app-name, app-name, app-name));
+  let test-suite :: <template>
+    = make(<template>,
+           output-path: to-target-path("tests/", format-to-string("%s-test-suite.dylan", app-name)),
+           constant-string: $test-suite-template,
+           arguments: list(app-name, app-name, app-name));
+  let test-suite-lid :: <template>
+    = make(<template>,
+           output-path: to-target-path("tests/", format-to-string("%s-test-suite.lid", app-name)),
+           constant-string: $test-suite-lid-template,
+           arguments: list(app-name, app-name, app-name));
 
   write-templates(main, lib, lid, license, gitignore, deft-package-json);
-
   write-registry(project-dir, app-name);
+
+  if (type == #"dll")
+    let test-dir = create-directory?(project-dir, "tests");
+    write-templates(test-suite-app-library, test-suite-app, test-suite-app-lid, test-suite-library, test-suite, test-suite-lid);
+    write-registry(project-dir, format-to-string("%s-test-suite", app-name), 
+                   registry-entry-prefix: "tests/");
+    write-registry(project-dir, format-to-string("%s-test-suite-app", app-name), 
+                   registry-entry-prefix: "tests/");
+  end if;
 end function make-dylan-app;
 
 define function write-registry
-    (directory :: <directory-locator>, name :: <string>)
-  let registry = create-directory(directory, "registry");
-  let generic = create-directory(registry, "generic");
+    (directory :: <directory-locator>, name :: <string>, #key registry-entry-prefix :: <string> = "")
+  let registry = create-directory?(directory, "registry");
+  let generic = create-directory?(registry, "generic");
   with-open-file (stream = merge-locators(as(<file-locator>, name), generic),
                   direction: #"output",
                   if-does-not-exist: #"create")
-    format(stream, "abstract://dylan/%s.lid\n", name)
+    format(stream, "abstract://dylan/%s%s.lid\n", registry-entry-prefix, name)
   end with-open-file;
 end;
 
