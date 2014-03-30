@@ -72,8 +72,13 @@ define function make-dylan-app (app-name :: <string>, #key type) => ()
            output-path: to-target-path(".gitignore"),
            constant-string: $gitignore-template,
            arguments: list());
+  let deft-package-json :: <template>
+    = make(<template>,
+           output-path: to-target-path("deft-package.json"),
+           constant-string: $deft-package-json-template,
+           arguments: list(app-name, app-name));
 
-  write-templates(main, lib, lid, license, gitignore);
+  write-templates(main, lib, lid, license, gitignore, deft-package-json);
 
   write-registry(project-dir, app-name);
 end function make-dylan-app;

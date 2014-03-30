@@ -67,3 +67,15 @@ define constant $gitignore-template :: <string>
  = ("_build\n"
     "*.hdp\n"
     "deft-package-local.json\n");
+
+define constant $deft-package-json-template :: <string>
+ = ("{\n"
+    "  \"name\": \"%s\",\n"
+    "  \"description\": \"\",\n"
+    "  \"keywords\": [\n"
+    "  ],\n"
+    "  \"license\": \"MIT\",\n"
+    "  \"default-target\": \"%s\",\n"
+    "  \"tests\": [\n"
+    "  ]\n"
+    "}\n");
