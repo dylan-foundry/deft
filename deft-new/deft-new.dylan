@@ -40,10 +40,17 @@ define function make-dylan-app (app-name :: <string>, #key type) => ()
                          project-dir);
         end method to-target-path;
 
+  let main-template-text
+    = if (type == "executable")
+        $main-executable-template-simple
+      else
+        $main-dll-template-simple
+      end if;
+
   let main :: <template>
     = make(<template>,
            output-path: to-target-path(app-name, ".dylan"),
-           constant-string: $main-template-simple,
+           constant-string: main-template-text,
            arguments: list(app-name));
   let lib :: <template>
     = make(<template>,

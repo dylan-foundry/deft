@@ -1,6 +1,6 @@
 Module: deft-new
 
-define constant $main-template-simple :: <string>
+define constant $main-executable-template-simple :: <string>
   = ("Module: %s\n"
      "Synopsis: \n"
      "Author: \n"
@@ -12,6 +12,14 @@ define constant $main-template-simple :: <string>
      "end function main;\n"
      "\n"
      "main(application-name(), application-arguments());\n");
+
+define constant $main-dll-template-simple :: <string>
+  = ("Module: %s\n"
+     "Synopsis: \n"
+     "Author: \n"
+     "Copyright: See LICENSE file in this distribution.\n"
+     "\n"
+     "\n");
 
 define constant $library-template-simple :: <string>
   = ("Module: dylan-user\n"
