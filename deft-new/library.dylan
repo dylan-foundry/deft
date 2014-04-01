@@ -23,12 +23,14 @@ define module deft-new
               format-to-string };
   use file-system,
     import: { create-directory,
+              file-exists?,
               with-open-file,
               working-directory };
   use locators,
     import: { <directory-locator>,
               <file-locator>,
-              merge-locators };
+              merge-locators,
+              subdirectory-locator };
   use strings,
     import: { alphabetic?,
               alphanumeric?,
