@@ -3,6 +3,8 @@ synopsis:
 author: Bruce Mitchener, Jr.
 copyright: See LICENSE file in this distribution.
 
+define variable *verbose?* :: <boolean> = #f;
+
 define function load-default-target () => (project :: false-or(<project-object>))
   let config = deft-config();
   let default-target = element(config, "default-target", default: #f);
@@ -77,19 +79,28 @@ define command clean ($deft-commands)
 end;
 
 
-define variable *lastmsg* = #f;
+define variable *last-heading-msg* = #f;
+define variable *last-item-msg* = #f;
 
 define method note-build-progress
     (context :: <deft-context>, project :: <project-object>,
      position :: <integer>, range :: <integer>,
      #key heading-label, item-label)
  => ();
-  let last-item-label = *lastmsg*;
-  if (item-label & ~empty?(item-label) & item-label ~= last-item-label)
-    *lastmsg* := item-label;
-    format-out("%s\n", item-label);
+  let last-heading-label = *last-heading-msg*;
+  if (heading-label & ~empty?(heading-label) & heading-label ~= last-heading-label)
+    *last-heading-msg* := heading-label;
+    format-out("%s\n", heading-label);
     force-output(*standard-output*);
-  end
+  end;
+  if (*verbose?*)
+    let last-item-label = *last-item-msg*;
+    if (item-label & ~empty?(item-label) & item-label ~= last-item-label)
+      *last-item-msg* := item-label;
+      format-out("  %s\n", item-label);
+      force-output(*standard-output*);
+    end;
+  end;
 end method note-build-progress;
 
 define method note-compiler-warning
@@ -99,7 +110,8 @@ define method note-compiler-warning
   let stream = *standard-output*;
   new-line(stream);
   print-environment-object-name(stream, project, warning, full-message?: #t);
-  new-line(stream)
+  new-line(stream);
+  force-output(*standard-output*);
 end method note-compiler-warning;
 
 
