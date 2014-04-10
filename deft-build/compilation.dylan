@@ -91,14 +91,14 @@ define method note-build-progress
   if (heading-label & ~empty?(heading-label) & heading-label ~= last-heading-label)
     *last-heading-msg* := heading-label;
     format-out("%s\n", heading-label);
-    force-output(*standard-output*);
+    force-out();
   end;
   if (*verbose?*)
     let last-item-label = *last-item-msg*;
     if (item-label & ~empty?(item-label) & item-label ~= last-item-label)
       *last-item-msg* := item-label;
       format-out("  %s\n", item-label);
-      force-output(*standard-output*);
+      force-out();
     end;
   end;
 end method note-build-progress;
@@ -111,7 +111,7 @@ define method note-compiler-warning
   new-line(stream);
   print-environment-object-name(stream, project, warning, full-message?: #t);
   new-line(stream);
-  force-output(*standard-output*);
+  force-out();
 end method note-compiler-warning;
 
 
@@ -127,7 +127,7 @@ define method compiler-condition-handler
      handler-type == #"link-warning", warning-message :: <string>)
  => (filename :: singleton(#f))
   format-out("%s\n", warning-message);
-  force-output(*standard-output*);
+  force-out();
 end method compiler-condition-handler;
 
 define method compiler-condition-handler
@@ -143,5 +143,5 @@ define method compiler-condition-handler
      warning-message :: <string>)
  => (yes? :: <boolean>)
   format-out("missing handler for %s: %s\n", handler-type, warning-message);
-  force-output(*standard-output*);
+  force-out();
 end method compiler-condition-handler;
