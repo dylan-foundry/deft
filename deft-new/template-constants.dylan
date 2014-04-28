@@ -29,12 +29,12 @@ define constant $library-template-simple :: <string>
      "  use io;\n"
      "\n"
      "  export %s;\n"
-     "end library;\n"
+     "end library %s;\n"
      "\n"
      "define module %s\n"
      "  use common-dylan, exclude: { format-to-string };\n"
      "  use format-out;\n"
-     "end module;\n");
+     "end module %s;\n");
 
 define constant $lid-template-simple :: <string>
   = ("Library: %s\n"

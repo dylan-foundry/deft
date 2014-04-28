@@ -1,5 +1,5 @@
 Module: deft-new
-Synopsis: A tool to create new Dylan projects.
+Synopsis: A command to create the initial boilerplate for new Dylan libraries.
 Copyright: Original Code is Copyright (c) 2012 Dylan Hackers. All rights reserved.
 License: See License.txt in this distribution for details.
 Warranty: Distributed WITHOUT WARRANTY OF ANY KIND
@@ -67,7 +67,7 @@ define function make-dylan-app (app-name :: <string>, #key type) => ()
     = make(<template>,
            output-path: to-target-path("library.dylan"),
            constant-string: $library-template-simple,
-           arguments: list(app-name, app-name, app-name));
+           arguments: list(app-name, app-name, app-name, app-name, app-name));
   let lid :: <template>
     = make(<template>,
            output-path: to-target-path(app-name, ".lid"),
