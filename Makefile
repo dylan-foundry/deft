@@ -16,7 +16,9 @@ build: $(APP_SOURCES)
 	# Install things we need to be able to build
 	cp -fp $(OPEN_DYLAN_DIR)/lib/*.jam _build/lib/
 	cp -rfp $(OPEN_DYLAN_DIR)/lib/runtime _build/lib/
-	cp -rfp $(OPEN_DYLAN_DIR)/include _build/
+	if [ -d $(OPEN_DYLAN_DIR)/include ]; then \
+	  cp -rfp $(OPEN_DYLAN_DIR)/include _build/; \
+	fi
 	ln -fs $(OPEN_DYLAN_DIR)/sources _build/
 	# deft-dfmc/tracing stuff:
 	mkdir -p _build/share/static/dfmc-tracing
@@ -33,5 +35,7 @@ install:
 	cp -rfp _build/lib $(INSTALL_DIR)/
 	cp -rp _build/share $(INSTALL_DIR)/
 	cp -rp _build/databases $(INSTALL_DIR)/
-	cp -rfp _build/include $(INSTALL_DIR)/
+	if [ -d _build/include ]; then \
+	  cp -rfp _build/include $(INSTALL_DIR)/; \
+	fi
 	ln -fs $(OPEN_DYLAN_DIR)/sources $(INSTALL_DIR)/
