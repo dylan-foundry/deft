@@ -2,9 +2,9 @@ all: build
 
 .PHONY: build
 
-OPEN_DYLAN_DIR=$(realpath $(dir $(realpath $(shell which dylan-compiler)))/..)
+OPEN_DYLAN_DIR = $(realpath $(dir $(realpath $(shell which dylan-compiler)))/..)
 
-INSTALL_DIR = /opt/deft
+INSTALL_DIR ?= /opt/deft
 
 APP_SOURCES = $(wildcard */*.dylan) \
               $(wildcard */*.lid)
