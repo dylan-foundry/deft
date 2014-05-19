@@ -52,5 +52,6 @@ define module deft-core
 
   export dylan-project,
          deft-open-project,
-         deft-close-project;
+         deft-close-project,
+         dylan-current-project;
 end module;

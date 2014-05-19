@@ -11,6 +11,7 @@ define library deft
 
   use deft-core;
 
+  use deft-browse;
   use deft-build;
   use deft-new;
   use deft-dfmc;
@@ -27,6 +28,7 @@ define module deft
 
   use deft-core;
 
+  use deft-browse;
   use deft-build;
   use deft-new;
   use deft-dfmc;

@@ -128,6 +128,7 @@ define function deft-open-project (project-name :: <string>) => (project)
          error-handler: curry(note-load-error, $deft-context, project));
 
       project.project-opened-by-user? := #t;
+      parse-project-source(project);
 
       dylan-current-project($deft-context) := project;
 
