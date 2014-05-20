@@ -30,3 +30,8 @@ To install Deft, you can use the ``Makefile``::
 
 This will copy a variety of things to ``/opt/deft`` and you
 can then add ``/opt/deft/bin`` to your path.
+
+If you want to change the install destination, you can override
+the ``INSTALL_DIR``::
+
+    make install INSTALL_DIR=/usr/local/deft
