@@ -19,7 +19,7 @@ define library deft-browse
 end library;
 
 define module deft-browse
-  use common-dylan, exclude: { format-to-string };
+  use common-dylan;
   use command-interface;
   use file-system;
   use format-out;
@@ -36,5 +36,6 @@ define module deft-browse
   use environment-protocols,
     exclude: { application-filename,
                application-arguments,
-               parameter-name };
+               parameter-name,
+               print-environment-object };
 end module;
