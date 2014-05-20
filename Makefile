@@ -29,7 +29,7 @@ clean:
 	rm -rf _build/lib/*deft*
 	rm -rf _build/build/deft*
 
-install:
+install: build
 	mkdir -p $(INSTALL_DIR)
 	cp -rp _build/bin $(INSTALL_DIR)/
 	cp -rfp _build/lib $(INSTALL_DIR)/
