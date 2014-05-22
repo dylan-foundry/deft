@@ -20,7 +20,8 @@ end library;
 
 define module deft-browse
   use common-dylan;
-  use command-interface;
+  use command-interface,
+    rename: { parameter-name => command-parameter-name };
   use file-system;
   use format-out;
   use locators;
@@ -36,6 +37,5 @@ define module deft-browse
   use environment-protocols,
     exclude: { application-filename,
                application-arguments,
-               parameter-name,
                print-environment-object };
 end module;

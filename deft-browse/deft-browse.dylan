@@ -3,7 +3,9 @@ module: deft-browse
 define function print-type (project :: <project-object>, type)
   if (type)
     let type-id = environment-object-id(project, type);
-    format-out(" :: %s", type-id.id-name);
+    if (type-id)
+      format-out(" :: %s", type-id.id-name);
+    end if;
   end if;
 end function;
 
@@ -33,7 +35,7 @@ end method;
 
 define method print-environment-object
     (project :: <project-object>, object == #f)
-  format-out("Object not found\n");
+  format-out("Binding not found.\n");
 end method;
 
 define method print-environment-object
@@ -68,16 +70,83 @@ define method print-environment-object
   format-out("\n");
 end method;
 
+define function function-parameter-to-string
+    (project :: <project-object>, param :: <parameter>, #key with-type :: <boolean> = #t)
+ => (string :: <string>)
+    let type = parameter-type(param);
+    let type-id = environment-object-id(project, type);
+    let name = parameter-name(param);
+    if (with-type & type-id)
+      concatenate(name, " :: ", type-id.id-name)
+    else
+      name
+    end if
+end function;
+
+define function function-signature
+    (project :: <project-object>,
+     object :: <dylan-function-object>)
+ => (signature :: <string>)
+  let parameter-to-string :: <function> = curry(function-parameter-to-string, project);
+  let (required, rest, keys, all-keys?, next, values, rest-values)
+    = function-parameters(project, object);
+  let result :: <byte-string> = make(<byte-string>);
+  result := concatenate(result, "(");
+  result := concatenate(result, join(map(parameter-to-string, required), ", "));
+  if (rest)
+    result := concatenate(result, ", #rest ", parameter-to-string(rest));
+  end;
+  if (~empty?(keys))
+    keys := map(parameter-to-string, keys);
+    result := concatenate(result, ", #key ", join(keys, ", "));
+  end;
+  if (all-keys?)
+    result := concatenate(result, ", #all-keys");
+  end;
+  if (next)
+    result := concatenate(result, ", #next ", parameter-to-string(next));
+  end;
+  result := concatenate(result, ") => (");
+  result := concatenate(result, join(map(parameter-to-string, values), ", "));
+  if (rest-values)
+    result := concatenate(result, parameter-to-string(rest-values));
+  end;
+  result := concatenate(result, ")");
+  result
+end function;
+
+define function print-function
+    (project :: <project-object>,
+     object :: <dylan-function-object>)
+  let id = environment-object-id(project, object);
+  format-out("%s %s", id.id-name, function-signature(project, object));
+  format-out("\t[%s]\n", definition-id-name(project, id));
+end function;
+
+define function print-method
+    (project :: <project-object>,
+     object :: <method-object>,
+     parent :: false-or(<generic-function-object>))
+  let id = environment-object-id(project, if (parent) parent else object end);
+  let indent = if (parent) "  " else "" end;
+  format-out("%s%s %s\n", indent, id.id-name, function-signature(project, object));
+end function;
+
 define method print-environment-object
     (project :: <project-object>, object :: <method-object>)
-  // Why method-generic-function returns #f?
-  print-environment-object(project, method-generic-function(project, object));
+  let generic = method-generic-function(project, object);
+  if (generic)
+    print-environment-object(project, method-generic-function(project, object));
+  else
+    print-method(project, object, #f);
+  end if;
 end method;
 
 define method print-environment-object
     (project :: <project-object>, object :: <generic-function-object>)
+  print-function(project, object);
   for (meth in generic-function-object-methods(project, object))
-    format-out("%s\n", environment-object-display-name(project, meth, #f));
+    print-method(project, meth, object);
   end for;
 end method;
 
