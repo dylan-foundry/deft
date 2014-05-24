@@ -168,6 +168,14 @@ define method print-environment-object
   format-out("\t[%s]\n", definition-id-name(project, id));
 end method;
 
+define method print-environment-object
+    (project :: <project-object>, object :: <macro-object>)
+  let id = environment-object-id(project, object);
+  // TODO: display the macro source definition?
+  format-out("macro %s", id.id-name);
+  format-out("\t[%s]\n", definition-id-name(project, id));
+end method;
+
 define function inspect-dylan-object (name :: <string>)
   let project = dylan-current-project($deft-context);
   let library = project-library(project);
