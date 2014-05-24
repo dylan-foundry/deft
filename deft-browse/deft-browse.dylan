@@ -38,11 +38,23 @@ define method print-environment-object
   format-out("Binding not found.\n");
 end method;
 
+define function definition-modifiers-string
+    (project :: <project-object>, object :: <environment-object>)
+ => (modifiers :: <string>)
+  let modifiers = definition-modifiers(project, object);
+  if (~empty?(modifiers))
+    concatenate(join(modifiers, " ", key: curry(as, <string>)), " ")
+  else
+    ""
+  end if
+end function;
+
 define method print-environment-object
     (project :: <project-object>, object :: <class-object>)
   let id = environment-object-id(project, object);
   let class-name = id.id-name;
-  format-out("%s", class-name);
+  let modifiers = definition-modifiers-string(project, object);
+  format-out("%s%s", modifiers, class-name);
   let superclasses = class-direct-superclasses(project, object);
   if (~empty?(superclasses))
     superclasses := map(method (c) id-name(environment-object-id(project, c)) end, superclasses);
@@ -119,7 +131,8 @@ define function print-function
     (project :: <project-object>,
      object :: <dylan-function-object>)
   let id = environment-object-id(project, object);
-  format-out("%s %s", id.id-name, function-signature(project, object));
+  let modifiers = definition-modifiers-string(project, object);
+  format-out("%s%s %s", modifiers, id.id-name, function-signature(project, object));
   format-out("\t[%s]\n", definition-id-name(project, id));
 end function;
 
@@ -129,7 +142,8 @@ define function print-method
      parent :: false-or(<generic-function-object>))
   let id = environment-object-id(project, if (parent) parent else object end);
   let indent = if (parent) "  " else "" end;
-  format-out("%s%s %s\n", indent, id.id-name, function-signature(project, object));
+  let modifiers = definition-modifiers-string(project, object);
+  format-out("%s%s%s %s\n", indent, modifiers, id.id-name, function-signature(project, object));
 end function;
 
 define method print-environment-object
@@ -172,7 +186,7 @@ define method print-environment-object
     (project :: <project-object>, object :: <macro-object>)
   let id = environment-object-id(project, object);
   // TODO: display the macro source definition?
-  format-out("macro %s", id.id-name);
+  format-out("%smacro %s", definition-modifiers-string(project, object), id.id-name);
   format-out("\t[%s]\n", definition-id-name(project, id));
 end method;
 
