@@ -192,11 +192,15 @@ end method;
 
 define function inspect-dylan-object (name :: <string>)
   let project = dylan-current-project($deft-context);
-  let library = project-library(project);
-  let object = find-environment-object(project, name,
-                                        library: library,
-                                        module: first(library-modules(project, library)) );
-  print-environment-object(project, object);
+  if (project)
+    let library = project-library(project);
+    let object = find-environment-object(project, name,
+                                          library: library,
+                                          module: first(library-modules(project, library)) );
+    print-environment-object(project, object);
+  else
+    format-out("No open project found.\n");
+  end if
 end function;
 
 define command inspect ($deft-commands)
