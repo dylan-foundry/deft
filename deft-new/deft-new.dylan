@@ -192,7 +192,8 @@ end;
 define command new application ($deft-commands)
   help "Create a skeleton application project.";
   simple parameter project-name :: <string>,
-    help: "The name of the project to create.";
+    help: "The name of the project to create.",
+    required?: #t;
   implementation
     begin
       generate-project(project-name, type: #"executable");
@@ -202,7 +203,8 @@ end;
 define command new library ($deft-commands)
   help "Create a skeleton library project.";
   simple parameter project-name :: <string>,
-    help: "The name of the project to create.";
+    help: "The name of the project to create.",
+    required?: #t;
   implementation
     begin
       generate-project(project-name, type: #"dll");
