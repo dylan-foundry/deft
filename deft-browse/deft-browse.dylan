@@ -202,7 +202,8 @@ end function;
 define command inspect ($deft-commands)
   help "Show something.";
   simple parameter dylan-object-name :: <string>,
-    help: "the dylan object";
+    help: "the dylan object",
+    required?: #t;
   implementation
     inspect-dylan-object(dylan-object-name);
 end;
