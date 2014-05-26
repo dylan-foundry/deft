@@ -115,9 +115,6 @@ define function function-signature
   if (all-keys?)
     result := concatenate(result, ", #all-keys");
   end;
-  if (next)
-    result := concatenate(result, ", #next ", parameter-to-string(next));
-  end;
   result := concatenate(result, ") => (");
   result := concatenate(result, join(map(parameter-to-string, values), ", "));
   if (rest-values)
