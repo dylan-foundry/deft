@@ -3,8 +3,6 @@ synopsis:
 author: Bruce Mitchener, Jr.
 copyright: See LICENSE file in this distribution.
 
-define variable *verbose?* :: <boolean> = #f;
-
 define function load-default-target () => (project :: false-or(<project-object>))
   let config = deft-config();
   let default-target = element(config, "default-target", default: #f);
@@ -17,33 +15,37 @@ define function load-default-target () => (project :: false-or(<project-object>)
   end if
 end;
 
-define method deft-build-project (project :: false-or(<string>)) => ()
+define method deft-build-project
+    (project :: false-or(<string>), #key verbose? = #f)
+ => ()
   let p = dylan-project($deft-context, project);
   if (p)
-    deft-build-project(p);
+    deft-build-project(p, verbose?: verbose?);
   else
     let p = load-default-target();
     if (p)
-      deft-build-project(p);
+      deft-build-project(p, verbose?: verbose?);
     end if;
   end if;
 end;
 
-define method deft-build-project (project :: <project-object>) => ()
+define method deft-build-project
+    (project :: <project-object>, #key verbose? = #f)
+ => ()
   format-out("Building project %s\n", project-name(project));
   force-out();
   if (build-project(project,
                     process-subprojects?: #t,
                     link?: #f,
                     save-databases?: #t,
-                    progress-callback:    curry(note-build-progress, $deft-context, project),
+                    progress-callback:    curry(note-build-progress, $deft-context, project, verbose?),
                     warning-callback:     curry(note-compiler-warning, $deft-context, project),
                     error-handler:        curry(compiler-condition-handler, $deft-context)))
     link-project
       (project,
        build-script: default-build-script(),
        process-subprojects?: #t,
-       progress-callback:    curry(note-build-progress, $deft-context, project),
+       progress-callback:    curry(note-build-progress, $deft-context, project, verbose?),
        error-handler:        curry(compiler-condition-handler, $deft-context));
   end if;
 end;
@@ -65,8 +67,10 @@ define command build ($deft-commands)
   simple parameter project :: <string>,
     help: "The project to build. If not specified, defaults to the current project.",
     node-class: <open-dylan-project-parameter>;
+  flag parameter verbose :: <boolean>,
+    help: "Display verbose output.";
   implementation
-    deft-build-project(project);
+    deft-build-project(project, verbose?: verbose);
 end;
 
 define command clean ($deft-commands)
@@ -84,7 +88,7 @@ define variable *last-item-msg* = #f;
 
 define method note-build-progress
     (context :: <deft-context>, project :: <project-object>,
-     position :: <integer>, range :: <integer>,
+     verbose? :: <boolean>, position :: <integer>, range :: <integer>,
      #key heading-label, item-label)
  => ();
   let last-heading-label = *last-heading-msg*;
@@ -93,7 +97,7 @@ define method note-build-progress
     format-out("%s\n", heading-label);
     force-out();
   end;
-  if (*verbose?*)
+  if (verbose?)
     let last-item-label = *last-item-msg*;
     if (item-label & ~empty?(item-label) & item-label ~= last-item-label)
       *last-item-msg* := item-label;
