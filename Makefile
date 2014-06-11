@@ -11,7 +11,21 @@ APP_SOURCES = $(wildcard */*.dylan) \
 
 REGISTRIES = `pwd`/registry:`pwd`/ext/command-interface/registry:`pwd`/ext/json/registry:`pwd`/ext/serialization/registry:`pwd`/ext/http/registry
 
-build: $(APP_SOURCES)
+ifeq (, $(wildcard .git))
+check-submodules:
+else
+check-submodules:
+	@for sms in `git submodule status --recursive | grep -v "^ " | cut -c 1`; do \
+	  if [ "$$sms" != "x" ]; then \
+	    echo "**** ERROR ****"; \
+	    echo "One or more submodules is not up to date."; \
+	    echo "Please run 'git submodule update --init --recursive'."; \
+	    exit 1; \
+	  fi; \
+	done;
+endif
+
+build: $(APP_SOURCES) check-submodules
 	OPEN_DYLAN_USER_REGISTRIES=$(REGISTRIES) dylan-compiler -build deft
 	# Install things we need to be able to build
 	cp -fp $(OPEN_DYLAN_DIR)/lib/*.jam _build/lib/
