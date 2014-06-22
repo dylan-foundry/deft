@@ -23,7 +23,7 @@ end method;
 
 
 
-define class <open-dylan-project-parameter> (<command-parameter>)
+define class <open-dylan-project-parameter> (<parameter-node>)
 end class;
 
 define method node-complete (param :: <open-dylan-project-parameter>, parser :: <command-parser>, token :: false-or(<command-token>))
@@ -40,7 +40,7 @@ define method node-complete (param :: <open-dylan-project-parameter>, parser :: 
   make-completion(param, token, complete-options: compls, exhaustive?: #t)
 end method;
 
-define class <dylan-project-parameter> (<command-parameter>)
+define class <dylan-project-parameter> (<parameter-node>)
 end class;
 
 define method node-complete (param :: <dylan-project-parameter>, parser :: <command-parser>, token :: false-or(<command-token>))
