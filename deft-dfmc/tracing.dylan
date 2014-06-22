@@ -10,7 +10,7 @@ define constant $stream-resource = make(<sse-resource>);
 
 define command dfmc trace set ($deft-commands)
   named parameter destination :: <symbol>,
-    node-class: <command-oneof>,
+    node-class: <oneof-node>,
     alternatives: #("text", "html");
   implementation
     begin

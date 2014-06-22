@@ -3,7 +3,7 @@ synopsis:
 author: Bruce Mitchener, Jr.
 copyright: See LICENSE file in this distribution.
 
-define class <report-type-parameter> (<command-parameter>)
+define class <report-type-parameter> (<parameter-node>)
 end class;
 
 define method node-complete (param :: <report-type-parameter>, parser :: <command-parser>, token :: false-or(<command-token>))
@@ -42,7 +42,7 @@ define command report ($deft-commands)
   named parameter project :: <string>,
     node-class: <dylan-project-parameter>;
   named parameter format :: <symbol>,
-    node-class: <command-oneof>,
+    node-class: <oneof-node>,
     alternatives: #("text", "dot", "html", "xml", "rst");
   implementation
     begin
