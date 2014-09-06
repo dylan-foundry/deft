@@ -208,3 +208,46 @@ define command inspect ($deft-commands)
   implementation
     inspect-dylan-object(dylan-object-name);
 end;
+
+define method print-class-subclasses
+    (project :: <project-object>, object)
+  let id = environment-object-id(project, object);
+  format-out("%s is not a class.\n", id.id-name);
+end method;
+
+define method print-class-subclasses
+    (project :: <project-object>, object == #f)
+  format-out("Object not found.\n");
+end method;
+
+define method print-class-subclasses
+    (project :: <project-object>, object :: <class-object>)
+  let id = environment-object-id(project, object);
+  let subclasses = class-direct-subclasses(project, object);
+  for (sc in subclasses)
+    let sc-id = environment-object-id(project, sc);
+    format-out("\t%s\n", sc-id.id-name);
+  end for;
+end method;
+
+define function subclasses-for-class(name :: <string>)
+  let project = dylan-current-project($deft-context);
+  if (project)
+    let library = project-library(project);
+    let object = find-environment-object(project, name,
+                                          library: library,
+                                          module: first(library-modules(project, library)));
+    print-class-subclasses(project, object);
+  else
+    format-out("No open project found.\n");
+  end if
+end function;
+
+define command subclasses ($deft-commands)
+  help "Display the subclasses of a class.";
+  simple parameter dylan-class-name :: <string>,
+    help: "the dylan class",
+    required?: #t;
+  implementation
+    subclasses-for-class(dylan-class-name);
+end;
