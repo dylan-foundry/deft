@@ -210,34 +210,39 @@ define command inspect ($deft-commands)
 end;
 
 define method print-class-subclasses
-    (project :: <project-object>, object)
+    (project :: <project-object>, object, depth :: <integer>, max-depth :: <integer>)
   let id = environment-object-id(project, object);
   format-out("%s is not a class.\n", id.id-name);
 end method;
 
 define method print-class-subclasses
-    (project :: <project-object>, object == #f)
+    (project :: <project-object>, object == #f, depth :: <integer>, max-depth :: <integer>)
   format-out("Object not found.\n");
 end method;
 
 define method print-class-subclasses
-    (project :: <project-object>, object :: <class-object>)
+    (project :: <project-object>, object :: <class-object>, depth :: <integer>, max-depth :: <integer>)
   let id = environment-object-id(project, object);
   let subclasses = class-direct-subclasses(project, object);
   for (sc in subclasses)
     let sc-id = environment-object-id(project, sc);
-    format-out("\t%s\n", sc-id.id-name);
+    // use 2 column indent, starting from column 2
+    let indent = make(<byte-string>, size: (depth + 1) * 2);
+    format-out("%s%s\n", indent, sc-id.id-name);
+    if (depth < max-depth)
+      print-class-subclasses(project, sc, depth + 1, max-depth);
+    end if;
   end for;
 end method;
 
-define function subclasses-for-class(name :: <string>)
+define function subclasses-for-class(name :: <string>, max-depth :: <integer>)
   let project = dylan-current-project($deft-context);
   if (project)
     let library = project-library(project);
     let object = find-environment-object(project, name,
                                           library: library,
                                           module: first(library-modules(project, library)));
-    print-class-subclasses(project, object);
+    print-class-subclasses(project, object, 0, max-depth);
   else
     format-out("No open project found.\n");
   end if
@@ -248,6 +253,9 @@ define command subclasses ($deft-commands)
   simple parameter dylan-class-name :: <string>,
     help: "the dylan class",
     required?: #t;
+  named parameter depth :: <integer>,
+    help: "the hierarchy depth",
+    required?: #f;
   implementation
-    subclasses-for-class(dylan-class-name);
+    subclasses-for-class(dylan-class-name, if (depth) depth else 0 end);
 end;
