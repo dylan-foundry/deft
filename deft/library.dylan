@@ -17,6 +17,7 @@ define library deft
   use deft-dfmc;
   use deft-server;
   use deft-test;
+  use deft-deploy;
 end library;
 
 define module deft
@@ -34,4 +35,5 @@ define module deft
   use deft-dfmc;
   use deft-server;
   use deft-test;
+  use deft-deploy;
 end module;
