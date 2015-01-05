@@ -28,7 +28,8 @@ endif
 build: $(APP_SOURCES) check-submodules
 	OPEN_DYLAN_USER_REGISTRIES=$(REGISTRIES) dylan-compiler -build deft
 	# Install things we need to be able to build
-	cp -fp $(OPEN_DYLAN_DIR)/lib/*.jam _build/lib/
+	mkdir -p _build/share/opendylan/
+	cp -frp $(OPEN_DYLAN_DIR)/share/opendylan/build-scripts _build/share/opendylan/
 	cp -rfp $(OPEN_DYLAN_DIR)/lib/runtime _build/lib/
 	if [ -d $(OPEN_DYLAN_DIR)/include ]; then \
 	  cp -rfp $(OPEN_DYLAN_DIR)/include _build/; \
