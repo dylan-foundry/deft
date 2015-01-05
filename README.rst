@@ -14,7 +14,7 @@ Building Deft
 
 You must build Deft with a build of Open Dylan from the master
 branch. Deft relies on features which have been added to Open
-Dylan after the 2013.2 release.
+Dylan in the 2014.1 release.
 
 To get things set up correctly, please use the ``Makefile`` to
 build Deft::
