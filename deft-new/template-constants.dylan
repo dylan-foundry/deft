@@ -43,7 +43,7 @@ define constant $lid-template-simple :: <string>
      "       %s\n");
 
 define constant $mit-license-template :: <string>
-  = ("Copyright (c) 2014 XXXXXXX, YYYYYY.\n"
+  = ("Copyright (c) 2015 XXXXXXX, YYYYYY.\n"
      "\n"
      "Permission is hereby granted, free of charge, to any person obtaining a\n"
      "copy of this software and associated documentation files (the \"Software\"),\n"
