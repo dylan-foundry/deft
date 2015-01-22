@@ -145,9 +145,9 @@ end function;
 
 define method print-environment-object
     (project :: <project-object>, object :: <method-object>)
-  let generic = method-generic-function(project, object);
-  if (generic)
-    print-environment-object(project, method-generic-function(project, object));
+  let gf = method-generic-function(project, object);
+  if (gf)
+    print-environment-object(project, gf);
   else
     print-method(project, object, #f);
   end if;
