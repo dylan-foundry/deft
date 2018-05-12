@@ -1,6 +1,17 @@
 TODO List
 =========
 
+Ease of Use
+-----------
+
+* Display a help message on startup, like "press Tab to see commands".
+* Ctrl-z doesn't work.
+* Ctrl-c **does** work, but maybe shouldn't cause exit. Ditto Ctrl-d.
+  But maybe deft doesn't maintain much state so it doesn't matter?
+* On startup, if no config file found say where it looked.
+* Shell command-line editing doesn't work, e.g., M-b M-f.
+* Documentation
+
 Config
 ------
 

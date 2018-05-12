@@ -24,6 +24,7 @@ define function parse-config-file
   end
 end function;
 
+// Merge two configs, with config2 overriding values from config1.
 define function merge-config
     (config1 :: <string-table>,
      config2 :: <string-table>)
